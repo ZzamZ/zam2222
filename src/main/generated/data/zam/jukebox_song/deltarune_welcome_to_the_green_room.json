@@ -1,0 +1,10 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "jukebox_song.zam.deltarune_welcome_to_the_green_room"
+  },
+  "length_in_seconds": 90.0,
+  "sound_event": {
+    "sound_id": "zam:deltarune.welcome_to_the_green_room"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "jukebox_song.zam.hxh_hunting_for_your_dream"
+  },
+  "length_in_seconds": 81.0,
+  "sound_event": {
+    "sound_id": "zam:hxh.hunting_for_your_dream"
+  }
+}

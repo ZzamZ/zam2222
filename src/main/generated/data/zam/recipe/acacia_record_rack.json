@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": "minecraft:stick",
+    "W": "minecraft:acacia_planks"
+  },
+  "pattern": [
+    "SSS",
+    "WWW"
+  ],
+  "result": {
+    "id": "zam:acacia_record_rack"
+  }
+}

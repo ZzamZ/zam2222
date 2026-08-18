@@ -1,0 +1,10 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "jukebox_song.zam.stardew_valley_movie_theater"
+  },
+  "length_in_seconds": 105.0,
+  "sound_event": {
+    "sound_id": "zam:stardew_valley.movie_theater"
+  }
+}

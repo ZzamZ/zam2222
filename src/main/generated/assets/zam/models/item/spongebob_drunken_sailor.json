@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "zam:item/spongebob_drunken_sailor"
+  }
+}

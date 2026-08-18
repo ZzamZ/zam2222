@@ -1,0 +1,10 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "jukebox_song.zam.deltarune_attack_of_the_killer_queen"
+  },
+  "length_in_seconds": 121.0,
+  "sound_event": {
+    "sound_id": "zam:deltarune.attack_of_the_killer_queen"
+  }
+}

@@ -1,0 +1,4 @@
+// 26.2	-999999999-01-01T00:00:00	ZAM's Mod/ZAM Block Tags
+cab6eae928fd7b115fc7349f56ff0660d3c3dc84 data/minecraft/tags/block/mineable/axe.json
+89a268219feeb114ef23edd2363884981c4d86b2 data/minecraft/tags/block/mineable/pickaxe.json
+2fa1fff55900c712d2a12cfe04f838cb1e43de3d data/zam/tags/block/incorrect_for_marine_tool.json

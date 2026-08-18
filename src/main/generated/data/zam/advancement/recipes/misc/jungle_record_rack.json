@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_record_for_jungle_record_rack": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:music_discs"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "zam:jungle_record_rack"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_record_for_jungle_record_rack"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "zam:jungle_record_rack"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "comparator_output": 1,
+  "description": {
+    "translate": "jukebox_song.zam.castle_crashers_space_pirates"
+  },
+  "length_in_seconds": 167.0,
+  "sound_event": {
+    "sound_id": "zam:castle_crashers.space_pirates"
+  }
+}

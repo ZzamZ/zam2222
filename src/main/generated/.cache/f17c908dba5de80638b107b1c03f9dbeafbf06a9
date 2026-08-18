@@ -1,0 +1,13 @@
+// 26.2	-999999999-01-01T00:00:00	ZAM's Mod/Block Loot Tables
+791d6740293d399d89e8039ba4d676cd2bd51b2e data/minecraft/loot_table/blocks/acacia_fence.json
+2d438faf6991fef992d7d076459c9e5d70130087 data/minecraft/loot_table/blocks/bamboo_fence.json
+74a1e588b3ebf87db26756d1e62d24fdfa98c16b data/minecraft/loot_table/blocks/birch_fence.json
+2d1596f0de1ba35ca27ebe394168709b6c4585aa data/minecraft/loot_table/blocks/cherry_fence.json
+c6bc858001f3ce950daaf1a4b34e129a77d26a95 data/minecraft/loot_table/blocks/crimson_fence.json
+275bc650bfea3725191c9bc4beaf7e97cbcd6e22 data/minecraft/loot_table/blocks/dark_oak_fence.json
+1176b45093f02b45e20c5c96f8edfa83ecef47b6 data/minecraft/loot_table/blocks/jungle_fence.json
+739a1c3ea5afe9ab73b70f18db397ba21ddb78a6 data/minecraft/loot_table/blocks/mangrove_fence.json
+7bed0549653d95d479f321d026850eaf0e09374d data/minecraft/loot_table/blocks/oak_fence.json
+a48d3a8875e77167af8a632f22f36b474d9888f2 data/minecraft/loot_table/blocks/pale_oak_fence.json
+3b3288fa7538b79f877b4f6c3d0dd4d5fafbcb05 data/minecraft/loot_table/blocks/spruce_fence.json
+c0f9c6cf9b388cb7ba31cbea88d5043e57c530ed data/minecraft/loot_table/blocks/warped_fence.json

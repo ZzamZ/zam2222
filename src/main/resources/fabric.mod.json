@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "zam",
+	"version": "${version}",
+	"name": "ZAM's Mod",
+	"description": "Adds some content I wanted ",
+	"authors": [
+		"ZAM"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/zam/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+          "net.ron.zam.ZAMMod"
+		],
+		"fabric-datagen": [
+          "net.ron.zam.ZAMModDataGenerator"
+		],
+      "client": [
+        "net.ron.zam.ZAMModClient"
+      ]
+	},
+	"mixins": [
+		"zam.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~26.2",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

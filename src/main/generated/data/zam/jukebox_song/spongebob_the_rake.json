@@ -1,0 +1,10 @@
+{
+  "comparator_output": 6,
+  "description": {
+    "translate": "jukebox_song.zam.spongebob_the_rake"
+  },
+  "length_in_seconds": 150.0,
+  "sound_event": {
+    "sound_id": "zam:spongebob.the_rake"
+  }
+}

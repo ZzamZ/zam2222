@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "#zam:dragon_ball_music_discs"
+  },
+  "pattern": [
+    "CC",
+    "CC"
+  ],
+  "result": {
+    "components": {
+      "minecraft:item_model": "zam:dragon_ball_case",
+      "minecraft:item_name": {
+        "italic": false,
+        "text": "Dragon Ball Case"
+      },
+      "zam:case_id": "zam:dragon_ball_case"
+    },
+    "count": 1,
+    "id": "zam:case"
+  }
+}

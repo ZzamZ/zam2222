@@ -1,0 +1,10 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "jukebox_song.zam.hxh_world_of_adventures"
+  },
+  "length_in_seconds": 200.0,
+  "sound_event": {
+    "sound_id": "zam:hxh.world_of_adventures"
+  }
+}

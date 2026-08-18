@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld_rod",
+  "textures": {
+    "layer0": "zam:item/stardew_valley_iridium_fishing_rod_cast"
+  }
+}

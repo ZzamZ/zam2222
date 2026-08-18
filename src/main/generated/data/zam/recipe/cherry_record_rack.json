@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": "minecraft:stick",
+    "W": "minecraft:cherry_planks"
+  },
+  "pattern": [
+    "SSS",
+    "WWW"
+  ],
+  "result": {
+    "id": "zam:cherry_record_rack"
+  }
+}

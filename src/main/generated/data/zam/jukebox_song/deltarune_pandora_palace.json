@@ -1,0 +1,10 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "jukebox_song.zam.deltarune_pandora_palace"
+  },
+  "length_in_seconds": 99.0,
+  "sound_event": {
+    "sound_id": "zam:deltarune.pandora_palace"
+  }
+}

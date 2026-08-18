@@ -1,0 +1,10 @@
+{
+  "comparator_output": 6,
+  "description": {
+    "translate": "jukebox_song.zam.spongebob_jellyfish_jam"
+  },
+  "length_in_seconds": 67.0,
+  "sound_event": {
+    "sound_id": "zam:spongebob.jellyfish_jam"
+  }
+}

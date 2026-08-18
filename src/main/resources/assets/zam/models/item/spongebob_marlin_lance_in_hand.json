@@ -1,0 +1,6 @@
+{
+  "parent": "zam:item/marlin_in_hand",
+  "textures": {
+    "layer0": "zam:item/spongebob_marlin_lance_in_hand"
+  }
+}

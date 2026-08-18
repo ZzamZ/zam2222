@@ -1,0 +1,125 @@
+{
+  "item_model": "zam:deltarune_case",
+  "key_item": "zam:case_key",
+  "rewards": [
+    {
+      "item": "zam:deltarune_rude_buster",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:deltarune_lantern",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:deltarune_field_of_hopes_and_dreams",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:deltarune_a_cybers_world",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:deltarune_pandora_palace",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:deltarune_physical_challenge",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:deltarune_welcome_to_the_green_room",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:deltarune_castle_funk",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:deltarune_fireplace",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:deltarune_the_third_sanctuary",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:deltarune_thousand_cafe_zukan",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:deltarune_running_sky",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:deltarune_chaos_king",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:deltarune_the_world_revolving",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:deltarune_smart_race",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:deltarune_big_shot",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:deltarune_tv_world",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:deltarune_guardian",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:deltarune_flower_castle",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:deltarune_sunset_of_seven_suns",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:deltarune_attack_of_the_killer_queen",
+      "rarity": "rare"
+    },
+    {
+      "item": "zam:deltarune_its_tv_time",
+      "rarity": "rare"
+    },
+    {
+      "item": "zam:deltarune_black_knife",
+      "rarity": "rare"
+    },
+    {
+      "item": "zam:deltarune_hammer_of_justice",
+      "rarity": "rare"
+    },
+    {
+      "item": "zam:deltarune_flower_man",
+      "rarity": "rare"
+    },
+    {
+      "display": "zam:red_icon",
+      "pool": [
+        "zam:deltarune_tenna_head"
+      ],
+      "rarity": "very_rare"
+    },
+    {
+      "display": "zam:gold_icon",
+      "pool": [
+        "zam:deltarune_black_knife_sword",
+        "zam:deltarune_mane_axe",
+        "zam:deltarune_holy_halberd"
+      ],
+      "rarity": "ultra_rare"
+    }
+  ],
+  "rows": 3,
+  "texture": "zam:textures/gui/case_three.png",
+  "title": "Deltarune Case"
+}

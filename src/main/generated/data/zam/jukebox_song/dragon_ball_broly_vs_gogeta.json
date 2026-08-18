@@ -1,0 +1,10 @@
+{
+  "comparator_output": 1,
+  "description": {
+    "translate": "jukebox_song.zam.dragon_ball_broly_vs_gogeta"
+  },
+  "length_in_seconds": 235.0,
+  "sound_event": {
+    "sound_id": "zam:dragon_ball.broly_vs_gogeta"
+  }
+}

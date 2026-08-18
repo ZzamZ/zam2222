@@ -1,0 +1,10 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "jukebox_song.zam.omori_space_boyfriends_tape"
+  },
+  "length_in_seconds": 29.0,
+  "sound_event": {
+    "sound_id": "zam:omori.space_boyfriends_tape"
+  }
+}

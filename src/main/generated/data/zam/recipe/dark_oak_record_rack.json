@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": "minecraft:stick",
+    "W": "minecraft:dark_oak_planks"
+  },
+  "pattern": [
+    "SSS",
+    "WWW"
+  ],
+  "result": {
+    "id": "zam:dark_oak_record_rack"
+  }
+}

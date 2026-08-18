@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "zam:item/stardew_valley_dragontooth_cutlass"
+  }
+}

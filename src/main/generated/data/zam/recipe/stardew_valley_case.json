@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "#zam:stardew_valley_music_discs"
+  },
+  "pattern": [
+    "CC",
+    "CC"
+  ],
+  "result": {
+    "components": {
+      "minecraft:item_model": "zam:stardew_valley_case",
+      "minecraft:item_name": {
+        "italic": false,
+        "text": "Stardew Valley Case"
+      },
+      "zam:case_id": "zam:stardew_valley_case"
+    },
+    "count": 1,
+    "id": "zam:case"
+  }
+}

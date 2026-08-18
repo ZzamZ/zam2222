@@ -1,0 +1,10 @@
+{
+  "comparator_output": 6,
+  "description": {
+    "translate": "jukebox_song.zam.spongebob_sweet_victory"
+  },
+  "length_in_seconds": 126.0,
+  "sound_event": {
+    "sound_id": "zam:spongebob.sweet_victory"
+  }
+}

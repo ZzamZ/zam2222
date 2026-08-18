@@ -1,0 +1,88 @@
+{
+  "item_model": "zam:omori_case",
+  "key_item": "zam:case_key",
+  "rewards": [
+    {
+      "item": "zam:omori_title",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:omori_by_your_side",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:omori_space_boyfriends_tape",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:omori_i_prefer_my_pizza",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:omori_sweet_paralysis",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:omori_lost_library",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:omori_a_home_for_flowers",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:omori_omori",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:omori_finding_shapes_in_the_clouds",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:omori_wandering_rose",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:omori_worlds_end_valentine",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:omori_goldenvengeance",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:omori_bready_steady_go",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:omori_you_were_wrong_go_back",
+      "rarity": "rare"
+    },
+    {
+      "item": "zam:omori_duet",
+      "rarity": "rare"
+    },
+    {
+      "item": "zam:omori_my_time",
+      "rarity": "rare"
+    },
+    {
+      "display": "zam:red_icon",
+      "pool": [
+        "zam:omori_flower_crown"
+      ],
+      "rarity": "very_rare"
+    },
+    {
+      "display": "zam:gold_icon",
+      "pool": [
+        "zam:omori_spiked_bat",
+        "zam:omori_lol_sword"
+      ],
+      "rarity": "ultra_rare"
+    }
+  ],
+  "rows": 2,
+  "texture": "zam:textures/gui/case_two.png",
+  "title": "OMORI Case"
+}

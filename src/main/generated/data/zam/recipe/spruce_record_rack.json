@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": "minecraft:stick",
+    "W": "minecraft:spruce_planks"
+  },
+  "pattern": [
+    "SSS",
+    "WWW"
+  ],
+  "result": {
+    "id": "zam:spruce_record_rack"
+  }
+}

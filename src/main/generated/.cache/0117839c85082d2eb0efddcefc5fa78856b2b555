@@ -1,0 +1,20 @@
+// 26.2	-999999999-01-01T00:00:00	ZAM's Mod/ZAM Item Tags
+c12c1c5277043109aa6e4e5e5b16de246b69641f data/c/tags/item/music_discs.json
+94d26c93f98157933fe28c18448d6769431d5e8f data/minecraft/tags/item/axes.json
+bd28fb93a98a8d0467a2016120a70bd9a7c22823 data/minecraft/tags/item/enchantable/durability.json
+72217a8a229f864d75fb8b97cfbb28f53ed424ec data/minecraft/tags/item/enchantable/fishing.json
+42b00dca3df3d9c2ec920519aa0063cf6411964f data/minecraft/tags/item/enchantable/mace.json
+21388091a81bf0e3eb882120c0ba2f46961e4109 data/minecraft/tags/item/head_armor.json
+229aefc01a8cfb5053f43bd289cde2593ae35ad8 data/minecraft/tags/item/hoes.json
+7342d86c06ed6b4991dc9ba30e3dc5e30d3b41f2 data/minecraft/tags/item/pickaxes.json
+fd5ff80db324a25c413a90992d32072efae7aaf5 data/minecraft/tags/item/shovels.json
+066709ac7adb0a2412b1fca97e01f4160ce1bd99 data/minecraft/tags/item/spears.json
+fa95d571770545455d3a2e4cf1546265c9d6a548 data/minecraft/tags/item/swords.json
+e832ab1e9172683c1c90c179cb3b93a4e484324a data/zam/tags/item/cases.json
+80bfa45dd8f6619ca5a58aab1c2e22671dd645c0 data/zam/tags/item/castle_crashers_music_discs.json
+35ba3c177ecd57e9acdd71cdf5f2cf08f7c69e6f data/zam/tags/item/deltarune_music_discs.json
+9ae02692e65d395806a5f075f050ac6d8092e314 data/zam/tags/item/dragon_ball_music_discs.json
+bee76a78d9d1f864132a482e84d2f073005bcbc6 data/zam/tags/item/hxh_music_discs.json
+17e59b4fcd7a769e0cdc74c9feb5457ed4b352fd data/zam/tags/item/omori_music_discs.json
+3126beb5d273c70bc8255dfd6f8d0c7906dcf9b5 data/zam/tags/item/spongebob_music_discs.json
+ebf44969bada752e61df85fef120e7913c47aa57 data/zam/tags/item/stardew_valley_music_discs.json

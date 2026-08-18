@@ -1,0 +1,10 @@
+{
+  "comparator_output": 3,
+  "description": {
+    "translate": "jukebox_song.zam.omori_you_were_wrong_go_back"
+  },
+  "length_in_seconds": 200.0,
+  "sound_event": {
+    "sound_id": "zam:omori.you_were_wrong_go_back"
+  }
+}

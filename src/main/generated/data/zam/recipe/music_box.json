@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "D": "minecraft:diamond",
+    "E": "minecraft:echo_shard",
+    "G": "minecraft:gold_ingot",
+    "P": "#minecraft:planks",
+    "R": "minecraft:repeater"
+  },
+  "pattern": [
+    "  G",
+    "RDE",
+    "PPP"
+  ],
+  "result": {
+    "id": "zam:music_box"
+  }
+}

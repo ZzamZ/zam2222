@@ -1,0 +1,10 @@
+{
+  "comparator_output": 1,
+  "description": {
+    "translate": "jukebox_song.zam.castle_crashers_four_brave_champs"
+  },
+  "length_in_seconds": 170.0,
+  "sound_event": {
+    "sound_id": "zam:castle_crashers.four_brave_champs"
+  }
+}

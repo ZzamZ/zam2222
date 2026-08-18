@@ -1,0 +1,10 @@
+{
+  "comparator_output": 6,
+  "description": {
+    "translate": "jukebox_song.zam.spongebob_maui_beach"
+  },
+  "length_in_seconds": 143.0,
+  "sound_event": {
+    "sound_id": "zam:spongebob.maui_beach"
+  }
+}

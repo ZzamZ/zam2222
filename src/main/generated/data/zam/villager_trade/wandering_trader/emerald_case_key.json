@@ -1,0 +1,12 @@
+{
+  "gives": {
+    "id": "zam:case_key"
+  },
+  "max_uses": 3.0,
+  "reputation_discount": 0.05,
+  "wants": {
+    "count": 18.0,
+    "id": "minecraft:emerald"
+  },
+  "xp": 10.0
+}

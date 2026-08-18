@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_case": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#zam:cases"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "zam:case_key"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_case"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "zam:case_key"
+    ]
+  }
+}

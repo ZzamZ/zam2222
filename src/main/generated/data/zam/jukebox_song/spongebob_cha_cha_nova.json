@@ -1,0 +1,10 @@
+{
+  "comparator_output": 6,
+  "description": {
+    "translate": "jukebox_song.zam.spongebob_cha_cha_nova"
+  },
+  "length_in_seconds": 170.0,
+  "sound_event": {
+    "sound_id": "zam:spongebob.cha_cha_nova"
+  }
+}

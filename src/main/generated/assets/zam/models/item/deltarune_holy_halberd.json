@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "zam:item/deltarune_holy_halberd"
+  }
+}

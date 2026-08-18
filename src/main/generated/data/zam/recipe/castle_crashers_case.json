@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "#zam:castle_crashers_music_discs"
+  },
+  "pattern": [
+    "CC",
+    "CC"
+  ],
+  "result": {
+    "components": {
+      "minecraft:item_model": "zam:castle_crashers_case",
+      "minecraft:item_name": {
+        "italic": false,
+        "text": "Castle Crashers Case"
+      },
+      "zam:case_id": "zam:castle_crashers_case"
+    },
+    "count": 1,
+    "id": "zam:case"
+  }
+}

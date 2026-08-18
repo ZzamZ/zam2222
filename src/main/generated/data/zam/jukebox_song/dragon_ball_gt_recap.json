@@ -1,0 +1,10 @@
+{
+  "comparator_output": 1,
+  "description": {
+    "translate": "jukebox_song.zam.dragon_ball_gt_recap"
+  },
+  "length_in_seconds": 89.0,
+  "sound_event": {
+    "sound_id": "zam:dragon_ball.gt_recap"
+  }
+}

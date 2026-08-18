@@ -1,0 +1,10 @@
+{
+  "comparator_output": 1,
+  "description": {
+    "translate": "jukebox_song.zam.dragon_ball_the_drink"
+  },
+  "length_in_seconds": 134.0,
+  "sound_event": {
+    "sound_id": "zam:dragon_ball.the_drink"
+  }
+}

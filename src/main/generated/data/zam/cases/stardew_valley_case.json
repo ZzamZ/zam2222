@@ -1,0 +1,126 @@
+{
+  "item_model": "zam:stardew_valley_case",
+  "key_item": "zam:case_key",
+  "rewards": [
+    {
+      "item": "zam:stardew_valley_overture",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:stardew_valley_spring",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:stardew_valley_summer",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:stardew_valley_adventure_guild",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:stardew_valley_fall",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:stardew_valley_library",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:stardew_valley_fair",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:stardew_valley_winter",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:stardew_valley_country_shop",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:stardew_valley_crystal_bells",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:stardew_valley_flicker",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:stardew_valley_submarine",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:stardew_valley_pelican_town",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:stardew_valley_stardrop_saloon",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:stardew_valley_luau_festival",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:stardew_valley_calico_desert",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:stardew_valley_night_market",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:stardew_valley_deep_woods",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:stardew_valley_movie_theater",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:stardew_valley_leos_song",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:stardew_valley_distant_banjo",
+      "rarity": "rare"
+    },
+    {
+      "item": "zam:stardew_valley_moonlight_jellyfish",
+      "rarity": "rare"
+    },
+    {
+      "item": "zam:stardew_valley_spirits_eve",
+      "rarity": "rare"
+    },
+    {
+      "item": "zam:stardew_valley_winter_festival",
+      "rarity": "rare"
+    },
+    {
+      "item": "zam:stardew_valley_ginger_island",
+      "rarity": "rare"
+    },
+    {
+      "display": "zam:red_icon",
+      "pool": [
+        "zam:stardew_valley_infinity_crown",
+        "zam:stardew_valley_straw_hat"
+      ],
+      "rarity": "very_rare"
+    },
+    {
+      "display": "zam:gold_icon",
+      "pool": [
+        "zam:stardew_valley_dragontooth_cutlass",
+        "zam:stardew_valley_iridium_hoe",
+        "zam:stardew_valley_iridium_fishing_rod"
+      ],
+      "rarity": "ultra_rare"
+    }
+  ],
+  "rows": 3,
+  "texture": "zam:textures/gui/case_three.png",
+  "title": "Stardew Valley Case"
+}

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "zam:block/tv/front/default",
+    "north": "zam:block/tv/front/default",
+    "south": "zam:block/tv/back/default",
+    "east": "zam:block/tv/side/default",
+    "west": "zam:block/tv/side/default",
+    "down": "zam:block/tv/top/default",
+    "up": "zam:block/tv/top/default"
+  }
+}

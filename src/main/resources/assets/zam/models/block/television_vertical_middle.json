@@ -1,0 +1,21 @@
+{
+  "parent": "minecraft:block/cube",
+  "elements": [
+    {   "from": [ 0, 0, 0 ],
+      "to": [ 16, 16, 16 ],
+      "faces": {
+        "north": { "texture": "#north", "cullface": "north" },
+        "south": { "texture": "#south", "cullface": "south" },
+        "east":  { "texture": "#east", "cullface": "east" },
+        "west":  { "texture": "#west", "cullface": "west" }
+      }
+    }
+  ],
+  "textures": {
+    "particle": "zam:block/tv/front/default",
+    "north": "zam:block/tv/front/vertical_middle",
+    "south": "zam:block/tv/back/vertical_middle",
+    "east": "zam:block/tv/side/middle",
+    "west": "zam:block/tv/side/middle"
+  }
+}

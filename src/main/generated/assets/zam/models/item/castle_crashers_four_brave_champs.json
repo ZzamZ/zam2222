@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "zam:item/castle_crashers_four_brave_champs"
+  }
+}

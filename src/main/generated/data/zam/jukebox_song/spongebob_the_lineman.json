@@ -1,0 +1,10 @@
+{
+  "comparator_output": 6,
+  "description": {
+    "translate": "jukebox_song.zam.spongebob_the_lineman"
+  },
+  "length_in_seconds": 156.0,
+  "sound_event": {
+    "sound_id": "zam:spongebob.the_lineman"
+  }
+}

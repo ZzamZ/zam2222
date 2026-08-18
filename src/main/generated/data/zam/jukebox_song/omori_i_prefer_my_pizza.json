@@ -1,0 +1,10 @@
+{
+  "comparator_output": 1,
+  "description": {
+    "translate": "jukebox_song.zam.omori_i_prefer_my_pizza"
+  },
+  "length_in_seconds": 44.0,
+  "sound_event": {
+    "sound_id": "zam:omori.i_prefer_my_pizza"
+  }
+}

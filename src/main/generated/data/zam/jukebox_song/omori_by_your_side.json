@@ -1,0 +1,10 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "jukebox_song.zam.omori_by_your_side"
+  },
+  "length_in_seconds": 96.0,
+  "sound_event": {
+    "sound_id": "zam:omori.by_your_side"
+  }
+}

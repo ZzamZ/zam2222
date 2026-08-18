@@ -1,0 +1,10 @@
+{
+  "comparator_output": 1,
+  "description": {
+    "translate": "jukebox_song.zam.castle_crashers_please_dont"
+  },
+  "length_in_seconds": 210.0,
+  "sound_event": {
+    "sound_id": "zam:castle_crashers.please_dont"
+  }
+}

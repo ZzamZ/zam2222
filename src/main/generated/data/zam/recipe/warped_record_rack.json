@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": "minecraft:stick",
+    "W": "minecraft:warped_planks"
+  },
+  "pattern": [
+    "SSS",
+    "WWW"
+  ],
+  "result": {
+    "id": "zam:warped_record_rack"
+  }
+}

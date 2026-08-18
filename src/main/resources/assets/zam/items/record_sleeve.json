@@ -1,0 +1,10 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "property": "minecraft:has_component",
+    "component": "minecraft:bundle_contents",
+    "ignore_default": true,
+    "on_true":  { "type": "minecraft:model", "model": "zam:item/record_sleeve_filled" },
+    "on_false": { "type": "minecraft:model", "model": "zam:item/record_sleeve_empty" }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "required": true,
+  "package": "net.ron.zam.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "FishingHookMixin",
+    "FishingHookSoundMixin",
+    "JukeboxBlockEntityMixin",
+    "JukeboxBlockMixin",
+    "JukeboxSongMixin",
+    "LivingEntityMixin",
+    "ParrotMixin",
+    "PeacefulPokeMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "client": [
+    "BundleMouseActionsMixin",
+    "RenderPipelinesAccessor",
+    "RenderTypeAccessor"
+  ]
+}

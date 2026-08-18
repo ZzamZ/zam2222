@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld_rod",
+  "textures": {
+    "layer0": "zam:item/hxh_gons_fishing_rod"
+  }
+}

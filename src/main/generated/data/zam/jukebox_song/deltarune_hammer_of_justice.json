@@ -1,0 +1,10 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "jukebox_song.zam.deltarune_hammer_of_justice"
+  },
+  "length_in_seconds": 134.0,
+  "sound_event": {
+    "sound_id": "zam:deltarune.hammer_of_justice"
+  }
+}

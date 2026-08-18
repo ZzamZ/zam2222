@@ -1,0 +1,89 @@
+package net.ron.zam.api.television;
+
+import java.util.Objects;
+
+public class IntAnimationState {
+
+    public static final IntAnimationState NO_ANIM = new IntAnimationState(1, 1) {
+        @Override public void increment() {}
+        @Override public void decrement() {}
+        @Override public float getValue(float partialTick) { return 0; }
+    };
+
+    public static final IntAnimationState MAX_ANIM = new IntAnimationState(1, 1) {
+        @Override public void increment() {}
+        @Override public void decrement() {}
+        @Override public float getValue(float partialTick) { return 1; }
+    };
+
+    private final int maxTick;
+    private final int forwardStep;
+    private final int backwardStep;
+    private final float valueScale;
+
+    private int currentTick;
+    private int prevTick;
+
+    public IntAnimationState(int turnOnTime, int turnOffTime) {
+        this(turnOnTime, turnOffTime, 1);
+    }
+
+    public IntAnimationState(int turnOnTime, int turnOffTime, float valueScale) {
+        if (turnOnTime <= 0 || turnOffTime <= 0) {
+            throw new IllegalArgumentException("Times must be positive");
+        }
+        this.valueScale = valueScale;
+
+        int max = Math.max(turnOnTime, turnOffTime);
+        int min = Math.min(turnOnTime, turnOffTime);
+
+        if (max % min != 0) {
+            throw new IllegalArgumentException(
+                    "Invalid animation ratio: one time must be an exact multiple of the other");
+        }
+
+        int ratio = max / min;
+
+        if (turnOnTime >= turnOffTime) {
+            this.forwardStep = 1;
+            this.backwardStep = ratio;
+        } else {
+            this.forwardStep = ratio;
+            this.backwardStep = 1;
+        }
+
+        this.maxTick = turnOnTime * forwardStep;
+        this.currentTick = 0;
+        this.prevTick = 0;
+    }
+
+    public boolean isDecreasing() { return currentTick < prevTick; }
+    public boolean isIncreasing() { return currentTick > prevTick; }
+
+    public void increment() {
+        prevTick = currentTick;
+        currentTick = Math.min(maxTick, currentTick + forwardStep);
+    }
+
+    public void decrement() {
+        prevTick = currentTick;
+        currentTick = Math.max(0, currentTick - backwardStep);
+    }
+
+    public float getValue(float partialTick) {
+        float interpolated = prevTick + (currentTick - prevTick) * partialTick;
+        return (interpolated / maxTick) * valueScale;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof IntAnimationState that)) return false;
+        return currentTick == that.currentTick && prevTick == that.prevTick;
+    }
+
+    @Override
+    public int hashCode() { return Objects.hash(currentTick, prevTick); }
+
+    @Override
+    public String toString() { return "Anim[" + currentTick + "->" + prevTick + "]"; }
+}

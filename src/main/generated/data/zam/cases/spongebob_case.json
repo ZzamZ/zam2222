@@ -1,0 +1,89 @@
+{
+  "item_model": "zam:spongebob_case",
+  "key_item": "zam:case_key",
+  "rewards": [
+    {
+      "item": "zam:spongebob_krusty_krab",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:spongebob_puka_a",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:spongebob_hawaiian_train",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:spongebob_chill_out",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:spongebob_maui_beach",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:spongebob_surf_buggy",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:spongebob_the_lineman",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:spongebob_drunken_sailor",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:spongebob_the_rake",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:spongebob_andy_annorak",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:spongebob_me_for_you",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:spongebob_cha_cha_nova",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:spongebob_sweet_victory",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:spongebob_garys_song",
+      "rarity": "rare"
+    },
+    {
+      "item": "zam:spongebob_award_winners_a",
+      "rarity": "rare"
+    },
+    {
+      "item": "zam:spongebob_jellyfish_jam",
+      "rarity": "rare"
+    },
+    {
+      "display": "zam:red_icon",
+      "pool": [
+        "zam:spongebob_krusty_krab_hat"
+      ],
+      "rarity": "very_rare"
+    },
+    {
+      "display": "zam:gold_icon",
+      "pool": [
+        "zam:spongebob_jellyfishing_net",
+        "zam:spongebob_golden_spatula",
+        "zam:spongebob_marlin_lance"
+      ],
+      "rarity": "ultra_rare"
+    }
+  ],
+  "rows": 2,
+  "texture": "zam:textures/gui/case_two.png",
+  "title": "SpongeBob Case"
+}

@@ -1,0 +1,16 @@
+{
+  "gives": {
+    "components": {
+      "minecraft:item_model": "zam:deltarune_case",
+      "zam:case_id": "zam:deltarune_case"
+    },
+    "id": "zam:case"
+  },
+  "max_uses": 8.0,
+  "reputation_discount": 0.05,
+  "wants": {
+    "count": 12.0,
+    "id": "minecraft:emerald"
+  },
+  "xp": 10.0
+}

@@ -1,0 +1,10 @@
+{
+  "comparator_output": 3,
+  "description": {
+    "translate": "jukebox_song.zam.omori_omori"
+  },
+  "length_in_seconds": 153.0,
+  "sound_event": {
+    "sound_id": "zam:omori.omori"
+  }
+}

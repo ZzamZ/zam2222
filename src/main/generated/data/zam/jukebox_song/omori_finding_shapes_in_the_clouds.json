@@ -1,0 +1,10 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "jukebox_song.zam.omori_finding_shapes_in_the_clouds"
+  },
+  "length_in_seconds": 91.0,
+  "sound_event": {
+    "sound_id": "zam:omori.finding_shapes_in_the_clouds"
+  }
+}

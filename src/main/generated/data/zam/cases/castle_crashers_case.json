@@ -1,0 +1,92 @@
+{
+  "item_model": "zam:castle_crashers_case",
+  "key_item": "zam:case_key",
+  "rewards": [
+    {
+      "item": "zam:castle_crashers_four_brave_champs",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:castle_crashers_flutey",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:castle_crashers_spanish_waltz",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:castle_crashers_race_around_the_world",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:castle_crashers_jumper",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:castle_crashers_please_dont",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:castle_crashers_the_abduction",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:castle_crashers_winter_bliss",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:castle_crashers_space_pirates",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:castle_crashers_the_show",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:castle_crashers_simple_sight",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:castle_crashers_final_confrontation",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:castle_crashers_archetype",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:castle_crashers_dark_skies",
+      "rarity": "rare"
+    },
+    {
+      "item": "zam:castle_crashers_rage_champions",
+      "rarity": "rare"
+    },
+    {
+      "item": "zam:castle_crashers_battleblock",
+      "rarity": "rare"
+    },
+    {
+      "display": "zam:red_icon",
+      "pool": [
+        "zam:castle_crashers_red_knight_helmet",
+        "zam:castle_crashers_blue_knight_helmet",
+        "zam:castle_crashers_green_knight_helmet",
+        "zam:castle_crashers_orange_knight_helmet"
+      ],
+      "rarity": "very_rare"
+    },
+    {
+      "display": "zam:gold_icon",
+      "pool": [
+        "zam:castle_crashers_chicken_sword",
+        "zam:castle_crashers_demon_sword",
+        "zam:castle_crashers_unicorn_sword"
+      ],
+      "rarity": "ultra_rare"
+    }
+  ],
+  "rows": 2,
+  "texture": "zam:textures/gui/case_two.png",
+  "title": "Castle Crashers Case"
+}

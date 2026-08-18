@@ -1,0 +1,6 @@
+{
+  "parent": "zam:item/power_poll_in_hand",
+  "textures": {
+    "layer0": "zam:item/dragon_ball_power_poll_in_hand"
+  }
+}

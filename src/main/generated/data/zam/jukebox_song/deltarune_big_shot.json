@@ -1,0 +1,10 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "jukebox_song.zam.deltarune_big_shot"
+  },
+  "length_in_seconds": 142.0,
+  "sound_event": {
+    "sound_id": "zam:deltarune.big_shot"
+  }
+}

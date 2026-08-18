@@ -1,0 +1,10 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "jukebox_song.zam.deltarune_flower_man"
+  },
+  "length_in_seconds": 192.0,
+  "sound_event": {
+    "sound_id": "zam:deltarune.flower_man"
+  }
+}

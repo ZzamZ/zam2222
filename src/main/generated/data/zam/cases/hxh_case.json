@@ -1,0 +1,51 @@
+{
+  "item_model": "zam:hxh_case",
+  "key_item": "zam:case_key",
+  "rewards": [
+    {
+      "item": "zam:hxh_departure",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:hxh_world_of_adventures",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:hxh_boys_be_courageous",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:hxh_from_whale_island",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:hxh_hisoka_theme",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:hxh_hunting_for_your_dream",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:hxh_all_i_need_is_money",
+      "rarity": "rare"
+    },
+    {
+      "display": "zam:red_icon",
+      "pool": [
+        "zam:hxh_gons_hair"
+      ],
+      "rarity": "very_rare"
+    },
+    {
+      "display": "zam:gold_icon",
+      "pool": [
+        "zam:hxh_gons_fishing_rod"
+      ],
+      "rarity": "ultra_rare"
+    }
+  ],
+  "rows": 1,
+  "texture": "zam:textures/gui/case_one.png",
+  "title": "Hunter x Hunter Case"
+}

@@ -1,0 +1,10 @@
+{
+  "comparator_output": 6,
+  "description": {
+    "translate": "jukebox_song.zam.spongebob_andy_annorak"
+  },
+  "length_in_seconds": 154.0,
+  "sound_event": {
+    "sound_id": "zam:spongebob.andy_annorak"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "zam:item/castle_crashers_demon_sword"
+  }
+}

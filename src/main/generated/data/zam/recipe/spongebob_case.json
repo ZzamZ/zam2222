@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "#zam:spongebob_music_discs"
+  },
+  "pattern": [
+    "CC",
+    "CC"
+  ],
+  "result": {
+    "components": {
+      "minecraft:item_model": "zam:spongebob_case",
+      "minecraft:item_name": {
+        "italic": false,
+        "text": "SpongeBob Case"
+      },
+      "zam:case_id": "zam:spongebob_case"
+    },
+    "count": 1,
+    "id": "zam:case"
+  }
+}

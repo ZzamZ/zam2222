@@ -1,0 +1,10 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "jukebox_song.zam.deltarune_the_third_sanctuary"
+  },
+  "length_in_seconds": 147.0,
+  "sound_event": {
+    "sound_id": "zam:deltarune.the_third_sanctuary"
+  }
+}

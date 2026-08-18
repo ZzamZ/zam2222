@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "#zam:omori_music_discs"
+  },
+  "pattern": [
+    "CC",
+    "CC"
+  ],
+  "result": {
+    "components": {
+      "minecraft:item_model": "zam:omori_case",
+      "minecraft:item_name": {
+        "italic": false,
+        "text": "OMORI Case"
+      },
+      "zam:case_id": "zam:omori_case"
+    },
+    "count": 1,
+    "id": "zam:case"
+  }
+}

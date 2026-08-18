@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=south": { "model": "zam:block/pale_oak_record_rack", "y": 0 },
+    "facing=west":  { "model": "zam:block/pale_oak_record_rack", "y": 270 },
+    "facing=north": { "model": "zam:block/pale_oak_record_rack", "y": 180 },
+    "facing=east":  { "model": "zam:block/pale_oak_record_rack", "y": 90 }
+  }
+}

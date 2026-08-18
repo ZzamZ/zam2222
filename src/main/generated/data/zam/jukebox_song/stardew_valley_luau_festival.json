@@ -1,0 +1,10 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "jukebox_song.zam.stardew_valley_luau_festival"
+  },
+  "length_in_seconds": 91.0,
+  "sound_event": {
+    "sound_id": "zam:stardew_valley.luau_festival"
+  }
+}

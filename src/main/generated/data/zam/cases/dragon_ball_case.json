@@ -1,0 +1,52 @@
+{
+  "item_model": "zam:dragon_ball_case",
+  "key_item": "zam:case_key",
+  "rewards": [
+    {
+      "item": "zam:dragon_ball_gatebreaker",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:dragon_ball_broly_vs_gogeta",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:dragon_ball_ultra_instinct",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:dragon_ball_gt_recap",
+      "rarity": "common"
+    },
+    {
+      "item": "zam:dragon_ball_dan_dan",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:dragon_ball_the_drink",
+      "rarity": "uncommon"
+    },
+    {
+      "item": "zam:dragon_ball_cha_la",
+      "rarity": "rare"
+    },
+    {
+      "display": "zam:red_icon",
+      "pool": [
+        "zam:dragon_ball_super_saiyan_hair"
+      ],
+      "rarity": "very_rare"
+    },
+    {
+      "display": "zam:gold_icon",
+      "pool": [
+        "zam:dragon_ball_power_poll",
+        "zam:dragon_ball_sickle_of_sorrow"
+      ],
+      "rarity": "ultra_rare"
+    }
+  ],
+  "rows": 1,
+  "texture": "zam:textures/gui/case_one.png",
+  "title": "Dragon Ball Case"
+}

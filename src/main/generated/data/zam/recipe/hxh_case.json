@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": "#zam:hxh_music_discs"
+  },
+  "pattern": [
+    "CC",
+    "CC"
+  ],
+  "result": {
+    "components": {
+      "minecraft:item_model": "zam:hxh_case",
+      "minecraft:item_name": {
+        "italic": false,
+        "text": "Hunter x Hunter Case"
+      },
+      "zam:case_id": "zam:hxh_case"
+    },
+    "count": 1,
+    "id": "zam:case"
+  }
+}

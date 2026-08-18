@@ -1,0 +1,10 @@
+{
+  "comparator_output": 1,
+  "description": {
+    "translate": "jukebox_song.zam.castle_crashers_archetype"
+  },
+  "length_in_seconds": 242.0,
+  "sound_event": {
+    "sound_id": "zam:castle_crashers.archetype"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "assets": {
+    "angry": "zam:entity/wolf/honey_angry",
+    "tame": "zam:entity/wolf/honey_tame",
+    "wild": "zam:entity/wolf/honey"
+  },
+  "baby_assets": {
+    "angry": "zam:entity/wolf/shaya_angry",
+    "tame": "zam:entity/wolf/shaya_tame",
+    "wild": "zam:entity/wolf/shaya"
+  },
+  "spawn_conditions": [
+    {
+      "priority": 0
+    }
+  ]
+}

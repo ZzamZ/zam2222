@@ -1,0 +1,10 @@
+{
+  "comparator_output": 2,
+  "description": {
+    "translate": "jukebox_song.zam.stardew_valley_spirits_eve"
+  },
+  "length_in_seconds": 123.0,
+  "sound_event": {
+    "sound_id": "zam:stardew_valley.spirits_eve"
+  }
+}

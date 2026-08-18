@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "zam:item/deltarune_black_knife_sword"
+  }
+}
