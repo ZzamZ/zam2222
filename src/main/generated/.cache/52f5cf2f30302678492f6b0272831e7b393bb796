@@ -1,4 +1,8 @@
 // 26.2	-999999999-01-01T00:00:00	ZAM's Mod/ZAM Recipes
+1c466b15e0a6a8ed9cf06f89c675d2777c8cdfca data/zam/advancement/recipes/food/corn_on_the_cob.json
+0ae338eb8e43db6a38bc5e6e8ae63d8d6d22ea8f data/zam/advancement/recipes/food/corn_on_the_cob_from_smoking.json
+2bcbd81aa724e77dbbc60a6bde68d92c510ccdd5 data/zam/advancement/recipes/food/popcorn.json
+6a0eaf4bb622be617f08a7161048e803a96ea41e data/zam/advancement/recipes/food/popcorn_from_smoking.json
 3658b8d63b3110bf07fe4e0147a0ce5dfcb3f755 data/zam/advancement/recipes/misc/acacia_record_rack.json
 cb0669197145d33feaac362c7c48f322ba0895ce data/zam/advancement/recipes/misc/bamboo_record_rack.json
 36bc72ce333e2d683e2568d7cbe1c402e84b87b4 data/zam/advancement/recipes/misc/birch_record_rack.json
@@ -19,6 +23,8 @@ f3076257791d6f7120e10d4bf136209fb5e93f34 data/zam/recipe/acacia_record_rack.json
 617737b4b763bb8d8b73cb5b06ab62c0bde4fdb1 data/zam/recipe/birch_record_rack.json
 42f753f628c278dc2d38c24c83be4b5885cbef7a data/zam/recipe/case_key.json
 0c1405484eddd9f64524f1514fa4cda290c7600c data/zam/recipe/cherry_record_rack.json
+b4c03c7d89a8dac010b80e9a18e2658752e541e9 data/zam/recipe/corn_on_the_cob.json
+d92c04be40826addf4322c3c74437a0f4b23cabe data/zam/recipe/corn_on_the_cob_from_smoking.json
 2d3e453dc754a39bfa2255f3487eb115341200f5 data/zam/recipe/crimson_record_rack.json
 f0d75a3b4283026b1c71f3aa2be74a2e52e62bc5 data/zam/recipe/dark_oak_record_rack.json
 6f1a79cce77fb35fdbda20c609a3a870f867fdea data/zam/recipe/jungle_record_rack.json
@@ -26,6 +32,8 @@ b8455c71cf35731b4793c4951d8261bdd4d55c25 data/zam/recipe/mangrove_record_rack.js
 78fda217ee8b844ab7d8c883b2a97830a66945b7 data/zam/recipe/music_box.json
 87a53708c69a67191885796568d6c176678b2851 data/zam/recipe/oak_record_rack.json
 f5d674cf97a68200aed159227e4253985e5d0b06 data/zam/recipe/pale_oak_record_rack.json
+733c3d50e0f24046ac2d54616ace8a1bf412cf9a data/zam/recipe/popcorn.json
+7c4f33df20f1c4aef1120e172e83009bedd4d98b data/zam/recipe/popcorn_from_smoking.json
 cbf9e47d515fcc2126a03df5bb41d70e9a01dd1e data/zam/recipe/record_sleeve.json
 aabb109407dd910bac4d8e1b03492ecb34cecfb9 data/zam/recipe/spruce_record_rack.json
 704930e015bdef57129fd8d1ff4b4b8eae505626 data/zam/recipe/warped_record_rack.json

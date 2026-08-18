@@ -45,6 +45,8 @@ public class ZAMItemGroups {
 
                         output.accept(ZAMItems.CORN);
                         output.accept(ZAMItems.CORN_KERNELS);
+                        output.accept(ZAMItems.POPCORN);
+                        output.accept(ZAMItems.CORN_ON_THE_COB);
 
                         output.accept(ZAMBlocks.TELEVISION);
                         output.accept(ZAMBlocks.PROJECTOR);

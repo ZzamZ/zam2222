@@ -4,12 +4,20 @@ import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CookingBookCategory;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.block.Blocks;
+import net.ron.zam.ZAMMod;
 import net.ron.zam.registry.ZAMBlocks;
 import net.ron.zam.registry.ZAMItems;
 import net.ron.zam.registry.ZAMTags;
@@ -148,6 +156,18 @@ public class ZAMRecipeProvider extends FabricRecipeProvider {
                         .define('G', Items.GOLD_INGOT)
                         .unlockedBy("has_record_for_music_box", has(ConventionalItemTags.MUSIC_DISCS))
                         .save(output);
+
+                SimpleCookingRecipeBuilder.smelting(Ingredient.of(ZAMItems.CORN), RecipeCategory.FOOD, CookingBookCategory.FOOD, ZAMItems.CORN_ON_THE_COB, 0.35F, 200
+                        ).unlockedBy("has_corn", has(ZAMItems.CORN)).save(output);
+
+                SimpleCookingRecipeBuilder.smoking(Ingredient.of(ZAMItems.CORN), RecipeCategory.FOOD, ZAMItems.CORN_ON_THE_COB, 0.35F, 100
+                        ).unlockedBy("has_corn", has(ZAMItems.CORN)).save(output, ResourceKey.create(Registries.RECIPE, ZAMMod.id("corn_on_the_cob_from_smoking")));
+
+                SimpleCookingRecipeBuilder.smelting(Ingredient.of(ZAMItems.CORN_KERNELS), RecipeCategory.FOOD, CookingBookCategory.FOOD, ZAMItems.POPCORN, 0.35F, 200
+                        ).unlockedBy("has_corn_kernels", has(ZAMItems.CORN_KERNELS)).save(output);
+
+                SimpleCookingRecipeBuilder.smoking(Ingredient.of(ZAMItems.CORN_KERNELS), RecipeCategory.FOOD, ZAMItems.POPCORN, 0.35F, 100
+                        ).unlockedBy("has_corn_kernels", has(ZAMItems.CORN_KERNELS)).save(output, ResourceKey.create(Registries.RECIPE, ZAMMod.id("popcorn_from_smoking")));
             }
         };
     }

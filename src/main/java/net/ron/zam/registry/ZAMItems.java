@@ -6,10 +6,12 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ToolMaterial;
+import net.minecraft.world.item.component.Consumables;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.equipment.ArmorMaterials;
 import net.minecraft.world.item.equipment.ArmorType;
@@ -34,7 +36,9 @@ public class ZAMItems {
 
     //Corn
     public static final Item CORN_KERNELS = registerItem("corn_kernels", properties -> new BlockItem(ZAMBlocks.CORN, properties));
-    public static final Item CORN = registerItem("corn", Item::new);
+    public static final Item CORN = registerItem("corn", properties -> new Item(properties.food(new FoodProperties.Builder().nutrition(3).saturationModifier(0.3F).build())));
+    public static final Item POPCORN = registerItem("popcorn", properties -> new Item(properties.food(new FoodProperties.Builder().nutrition(4).saturationModifier(0.4F).build()).component(DataComponents.CONSUMABLE, Consumables.defaultFood().consumeSeconds(0.8F).build())));
+    public static final Item CORN_ON_THE_COB = registerItem("corn_on_the_cob", properties -> new Item(properties.food(new FoodProperties.Builder().nutrition(6).saturationModifier(0.6F).build())));
 
     //Fishing
     public static final Item FISHERMAN_MASTERY_CAP = registerItem("fish_cap", s -> new HatItem(s.stacksTo(1).rarity(Rarity.EPIC), "Fishing Mastery", ZAMSounds.FISH_CAP_EQUIP));

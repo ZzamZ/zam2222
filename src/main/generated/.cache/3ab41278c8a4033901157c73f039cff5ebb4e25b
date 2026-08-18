@@ -24,6 +24,7 @@ b317ed1d66c57e58dcfa217dd2cb72235c616d23 assets/zam/items/castle_crashers_unicor
 811c409000b44401003b2c00a3c12074ba3e299a assets/zam/items/castle_crashers_winter_bliss.json
 8e9f0842cc45eea03bd7b017183cda3fa25486c0 assets/zam/items/corn.json
 f4c2df6e1bd6367eb0bb1d13894a37ac4c3c1a4d assets/zam/items/corn_kernels.json
+39fe24861fa84418fb48db7b91fc8634c03c142a assets/zam/items/corn_on_the_cob.json
 a22cc9a27341f66a5fe39806446b5b16939701d9 assets/zam/items/deltarune_a_cybers_world.json
 c38de1b631bad28b532274e032cad6b4ec9a1ffe assets/zam/items/deltarune_attack_of_the_killer_queen.json
 2f40001d116604d29f362e634b39e929fb445bc9 assets/zam/items/deltarune_big_shot.json
@@ -101,6 +102,7 @@ e2f4fb0834a8d0cde976d7f8fd9f1065f158a0e7 assets/zam/items/omori_wandering_rose.j
 307b04f7151d72756a0374794567ff81aec256d5 assets/zam/items/omori_whitespace_lightbulb.json
 ca1e75a16110a69f7bb9c0acc6a1e52c7b290e31 assets/zam/items/omori_worlds_end_valentine.json
 5e1757a81bb8c62ed44805d886827723cad92303 assets/zam/items/omori_you_were_wrong_go_back.json
+b6fdb3e3778eb72bb2a782c3e1cebcc94096f88a assets/zam/items/popcorn.json
 6f928611176acb9fee71dfef317cc6486c70618c assets/zam/items/red_icon.json
 5d5855d96479fef7211d8b8df495ee3089eeca37 assets/zam/items/sea_jelly.json
 491e18527856291eca71481a762a59f639d444f7 assets/zam/items/secret_message.json
@@ -180,6 +182,7 @@ b49fd263884d3ca20f5762bb7ce7e8d7a9701bda assets/zam/models/item/castle_crashers_
 1163da08258b7dd29815515efad6793fbf153d84 assets/zam/models/item/castle_crashers_winter_bliss.json
 b9b9565f8bb0eb359e93bd952b386fe3e7155370 assets/zam/models/item/corn.json
 5533e81ba4775eb19f66362e102724c3a7d5dfd7 assets/zam/models/item/corn_kernels.json
+681b129850e4955aa53daef91c733ee5a2798670 assets/zam/models/item/corn_on_the_cob.json
 576d69c6644c9a58adb20a879e2b26e2333b942f assets/zam/models/item/deltarune_a_cybers_world.json
 996c7c5ed33597c77d01cadbb1bec994f9da2cf9 assets/zam/models/item/deltarune_attack_of_the_killer_queen.json
 45f62e857d684842507587c5d41ea774b86e5a2c assets/zam/models/item/deltarune_big_shot.json
@@ -259,6 +262,7 @@ a0a005e47b8ff924d9558937ff9d4a5995944fda assets/zam/models/item/omori_title.json
 2521a8ad94aaa24d54ceedbf38bf74d54e9b8782 assets/zam/models/item/omori_whitespace_lightbulb.json
 97090e3cfb353bed00d83c0bbfda8586907e7edd assets/zam/models/item/omori_worlds_end_valentine.json
 85d9feb7c9ea5d91aa8ffa466be5f1de77d4b9e1 assets/zam/models/item/omori_you_were_wrong_go_back.json
+34e8667a77f134bb6938ceb315ebf34b767da9e1 assets/zam/models/item/popcorn.json
 0b5c58c5660589950c178f105b32aec841cc8f95 assets/zam/models/item/red_icon.json
 d278386bdf4ab3f9e468e7b067695fd0a7d63dbd assets/zam/models/item/sea_jelly.json
 29fc8b34837498ad7e7a8f582f2e44b8dec63760 assets/zam/models/item/secret_message.json

@@ -1,4 +1,4 @@
-package net.ron.zam.common.block.corn;
+package net.ron.zam.common.block;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -22,10 +22,10 @@ public class CornCropBlock extends CropBlock {
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
     private static final VoxelShape[] SHAPES = {
-            Block.box(3, 0, 3, 13, 5, 13),
-            Block.box(3, 0, 3, 13, 11, 13),
-            Block.box(3, 0, 3, 13, 16, 13),
-            Block.box(3, 0, 3, 13, 16, 13)
+            Block.box(2, 0, 2, 14, 5, 14),
+            Block.box(2, 0, 2, 14, 11, 14),
+            Block.box(2, 0, 2, 14, 16, 14),
+            Block.box(2, 0, 2, 14, 16, 14)
     };
 
     public CornCropBlock(Properties properties) {

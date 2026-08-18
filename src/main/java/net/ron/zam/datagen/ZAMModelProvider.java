@@ -26,6 +26,8 @@ public class ZAMModelProvider extends FabricModelProvider {
 
         itemModelGenerator.generateFlatItem(ZAMItems.CORN, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(ZAMItems.CORN_KERNELS, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(ZAMItems.CORN_ON_THE_COB, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(ZAMItems.POPCORN, ModelTemplates.FLAT_ITEM);
 
         itemModelGenerator.generateFlatItem(ZAMItems.MUSIC_BOX, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(ZAMItems.CASE_KEY, ModelTemplates.FLAT_ITEM);
