@@ -18,7 +18,7 @@ public final class WebVideoManager {
     private static final int VIDEO_WIDTH = 1920, VIDEO_HEIGHT = 1080;
     private static final float MAX_MEDIA_VOLUME = 0.35F;
     private static final double MAX_AUDIO_DISTANCE = 64D;
-    private static final long RETRY_DELAY = 30_000L, UNUSED_TIMEOUT = 5 * 60_000L;
+    private static final long RETRY_DELAY = 30_000L;
 
     private WebVideoManager() {}
 
@@ -29,57 +29,74 @@ public final class WebVideoManager {
     @Nullable
     public static Identifier texture(TelevisionBlockEntity tv, VideoMediaComponent media) {
         Entry entry = getOrCreate(tv, media);
-        if (entry == null || entry.session == null || entry.session.ended()) return null;
+
+        if (entry == null || entry.session == null || entry.session.ended())
+            return null;
 
         if (entry.session.failed()) {
             retry(entry);
             return null;
         }
 
-        entry.lastUsed = System.currentTimeMillis();
-        settings(entry.session, tv, media);
-        syncPlayback(entry.session, tv);
-
         return entry.session.hasFrame() ? entry.session.texture() : null;
     }
 
     public static MediaState state(TelevisionBlockEntity tv, VideoMediaComponent media) {
         Entry entry = getOrCreate(tv, media);
-        if (entry == null || entry.session == null) return MediaState.LOADING;
 
-        if (entry.session.ended()) return MediaState.ENDED;
+        if (entry == null || entry.session == null)
+            return MediaState.LOADING;
+
+        if (entry.session.ended())
+            return MediaState.ENDED;
 
         if (entry.session.failed()) {
             retry(entry);
             return MediaState.LOADING;
         }
 
-        entry.lastUsed = System.currentTimeMillis();
-        settings(entry.session, tv, media);
-        syncPlayback(entry.session, tv);
-
         if (!powered(tv) || !tv.isPlaying())
             return MediaState.PAUSED;
 
-        return entry.session.ready()
-                ? MediaState.PLAYING
-                : MediaState.LOADING;
+        return entry.session.ready() ? MediaState.PLAYING : MediaState.LOADING;
     }
 
     public static void tick() {
-        for (Entry entry : SESSIONS.values()) {
-            if (entry.session != null)
-                entry.session.update();
-        }
+        Iterator<Entry> iterator = SESSIONS.values().iterator();
 
-        cleanup();
+        while (iterator.hasNext()) {
+            Entry entry = iterator.next();
+            TelevisionBlockEntity tv = entry.tv;
+
+            if (tv == null || tv.isRemoved() || tv.getLevel() == null) {
+                close(entry);
+                iterator.remove();
+                continue;
+            }
+
+            if (entry.session == null)
+                continue;
+
+            if (entry.session.failed()) {
+                retry(entry);
+                continue;
+            }
+
+            settings(entry.session, tv, entry.volume);
+
+            if (!powered(tv) || !tv.isPlaying())
+                entry.session.pause();
+            else
+                entry.session.resume();
+
+            entry.session.update();
+        }
     }
 
-    private static void syncPlayback(WebMediaSession session, TelevisionBlockEntity tv) {
-        if (!powered(tv) || !tv.isPlaying())
-            session.pause();
-        else
-            session.resume();
+    public static void renderFrame() {
+        for (Entry entry : SESSIONS.values())
+            if (entry.session != null)
+                entry.session.present();
     }
 
     @Nullable
@@ -87,7 +104,6 @@ public final class WebVideoManager {
         if (tv.getLevel() == null || media.url().isBlank()) return null;
 
         UUID id = playbackId(tv);
-        long now = System.currentTimeMillis();
         Entry entry = SESSIONS.get(id);
 
         if (entry != null && !entry.url.equals(media.url())) {
@@ -96,9 +112,12 @@ public final class WebVideoManager {
         }
 
         if (entry == null) {
-            entry = new Entry(id, media.url(), now);
+            entry = new Entry(id, media.url(), tv, media.volume());
             entry.session = createSession(id, media.url());
             SESSIONS.put(id, entry);
+        } else {
+            entry.tv = tv;
+            entry.volume = media.volume();
         }
 
         return entry;
@@ -132,9 +151,8 @@ public final class WebVideoManager {
         return UUID.nameUUIDFromBytes(value.getBytes(StandardCharsets.UTF_8));
     }
 
-    private static void settings(WebMediaSession session, TelevisionBlockEntity tv,
-                                 VideoMediaComponent media) {
-        session.setBroadcasterVolume(media.volume() * MAX_MEDIA_VOLUME);
+    private static void settings(WebMediaSession session, TelevisionBlockEntity tv, float volume) {
+        session.setBroadcasterVolume(volume * MAX_MEDIA_VOLUME);
 
         var player = Minecraft.getInstance().player;
 
@@ -144,11 +162,9 @@ public final class WebVideoManager {
         }
 
         double distance = player.position().distanceTo(Vec3.atCenterOf(tv.getBlockPos()));
-        session.setDistanceVolume(attenuation(distance));
-    }
-
-    private static float attenuation(double distance) {
-        return (float) Math.clamp(1D - distance / MAX_AUDIO_DISTANCE, 0D, 1D);
+        session.setDistanceVolume(
+                (float) Math.clamp(1D - distance / MAX_AUDIO_DISTANCE, 0D, 1D)
+        );
     }
 
     private static boolean powered(TelevisionBlockEntity tv) {
@@ -166,18 +182,6 @@ public final class WebVideoManager {
     public static void stop(TelevisionBlockEntity tv) {
         if (tv.getLevel() != null)
             remove(playbackId(tv));
-    }
-
-    public static void cleanup() {
-        long now = System.currentTimeMillis();
-
-        SESSIONS.entrySet().removeIf(entry -> {
-            if (now - entry.getValue().lastUsed <= UNUSED_TIMEOUT)
-                return false;
-
-            close(entry.getValue());
-            return true;
-        });
     }
 
     public static void clear() {
@@ -204,14 +208,17 @@ public final class WebVideoManager {
     private static final class Entry {
         private final UUID id;
         private final String url;
+        private TelevisionBlockEntity tv;
+        private float volume;
 
         @Nullable private WebMediaSession session;
-        private long lastUsed, lastRetry;
+        private long lastRetry;
 
-        private Entry(UUID id, String url, long now) {
+        private Entry(UUID id, String url, TelevisionBlockEntity tv, float volume) {
             this.id = id;
             this.url = url;
-            this.lastUsed = now;
+            this.tv = tv;
+            this.volume = volume;
         }
     }
 }

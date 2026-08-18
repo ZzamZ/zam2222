@@ -143,8 +143,12 @@ public class TelevisionBlock extends BaseEntityBlock {
     }
 
     private static boolean tryEject(BlockState state, Level level, BlockPos pos, Player player) {
+        if (!player.getMainHandItem().isEmpty())
+            return false;
+
         var master = TelevisionMultiblock.findMaster(level, pos, state.getValue(FACING));
-        if (master == null || master.tv().cassette().isEmpty()) return false;
+        if (master == null || master.tv().cassette().isEmpty())
+            return false;
 
         if (!level.isClientSide()) {
             ItemStack out = master.tv().cassette().copy();

@@ -76,8 +76,10 @@ public final class WebMediaSession implements AutoCloseable {
                 started = true;
             }
         }
+    }
 
-        if (started && !paused)
+    public void present() {
+        if (!closed && started && !paused && video != null)
             video.present();
     }
 
@@ -121,22 +123,17 @@ public final class WebMediaSession implements AutoCloseable {
 
     public void setBroadcasterVolume(float value) {
         broadcasterVolume = Math.clamp(value, 0F, 1F);
-
-        if (audio != null)
-            audio.setBroadcasterVolume(broadcasterVolume);
+        if (audio != null) audio.setBroadcasterVolume(broadcasterVolume);
     }
 
     public void setDistanceVolume(float value) {
         distanceVolume = Math.clamp(value, 0F, 1F);
-
-        if (audio != null)
-            audio.setDistanceVolume(distanceVolume);
+        if (audio != null) audio.setDistanceVolume(distanceVolume);
     }
 
     @Override
     public void close() {
         if (closed) return;
-
         closed = true;
 
         if (video != null) {

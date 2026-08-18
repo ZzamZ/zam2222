@@ -4,7 +4,6 @@
   "item.zam.music_box": "Music Box",
   "item.zam.gold_icon": "Gold Icon",
   "item.zam.cassette": "Cassette",
-  "item.zam.cassette": "Cassette",
 
   "item.zam.wood_medal": "Wood Medal",
   "item.zam.bronze_medal": "Bronze Medal",
@@ -12,6 +11,10 @@
   "item.zam.gold_medal": "Gold Medal",
   "item.zam.legendary_medal": "Legendary Medal",
   "item.zam.fish_cap": "Fish Fear Me Cap",
+
+  "item.zam.corn": "Corn",
+  "item.zam.corn_kernels": "Corn Kernels",
+
 
   "item.zam.message_in_a_bottle": "Message In A Bottle",
   "item.zam.secret_message": "Secret Message",

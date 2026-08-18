@@ -4,9 +4,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.ClientTooltipComponentCallback;
-import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.minecraft.client.Minecraft;
+import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.ron.zam.api.musicbox.SoundTracker;
@@ -16,13 +14,8 @@ import net.ron.zam.common.client.block.RecordRackBlockEntityRenderer;
 import net.ron.zam.common.client.block.television.TelevisionRenderer;
 import net.ron.zam.common.gui.cases.CaseScreen;
 import net.ron.zam.common.gui.record_rack.RecordRackScreen;
-import net.ron.zam.registry.ZAMBlockEntities;
-import net.ron.zam.registry.ZAMMenuTypes;
-import net.ron.zam.registry.ZAMRenderPipelines;
-import net.ron.zam.util.tooltips.ClientMusicBoxTooltip;
-import net.ron.zam.util.tooltips.ClientRecordSleeveTooltip;
-import net.ron.zam.util.tooltips.MusicBoxTooltip;
-import net.ron.zam.util.tooltips.RecordSleeveTooltip;
+import net.ron.zam.registry.*;
+import net.ron.zam.util.tooltips.*;
 
 public class ZAMModClient implements ClientModInitializer {
     @Override
@@ -49,6 +42,9 @@ public class ZAMModClient implements ClientModInitializer {
             SoundTracker.tick();
             WebVideoManager.tick();
         });
+
+        LevelRenderEvents.START_MAIN.register(context ->
+                WebVideoManager.renderFrame());
     }
 
     private void registerMenuScreens() {

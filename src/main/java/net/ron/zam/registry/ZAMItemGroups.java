@@ -43,6 +43,9 @@ public class ZAMItemGroups {
                         output.accept(ZAMItems.MARINE_HOE);
                         output.accept(ZAMItems.MARINE_SPEAR);
 
+                        output.accept(ZAMItems.CORN);
+                        output.accept(ZAMItems.CORN_KERNELS);
+
                         output.accept(ZAMBlocks.TELEVISION);
                         output.accept(ZAMBlocks.PROJECTOR);
 

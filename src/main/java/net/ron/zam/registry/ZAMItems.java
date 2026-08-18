@@ -6,6 +6,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ToolMaterial;
@@ -30,6 +31,10 @@ public class ZAMItems {
     public static final Item CASSETTE = registerItem("cassette", s -> new CassetteItem(s.stacksTo(1).component(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay.DEFAULT.withHidden(DataComponents.DYED_COLOR, true))));
     public static final Item CASE = registerItem("case", s -> new CaseItem(s.rarity(Rarity.UNCOMMON)));
     public static final Item VIDEO_TAPE = registerItem("video_tape", properties -> new VideoTapeItem(properties.stacksTo(1)));
+
+    //Corn
+    public static final Item CORN_KERNELS = registerItem("corn_kernels", properties -> new BlockItem(ZAMBlocks.CORN, properties));
+    public static final Item CORN = registerItem("corn", Item::new);
 
     //Fishing
     public static final Item FISHERMAN_MASTERY_CAP = registerItem("fish_cap", s -> new HatItem(s.stacksTo(1).rarity(Rarity.EPIC), "Fishing Mastery", ZAMSounds.FISH_CAP_EQUIP));

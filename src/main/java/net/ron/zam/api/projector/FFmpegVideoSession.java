@@ -10,21 +10,19 @@ import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.LongSupplier;
 
 public final class FFmpegVideoSession implements AutoCloseable {
     private static final int FPS = 60;
     private static final long FRAME_NS = 1_000_000_000L / FPS;
-    private static final int QUEUE_SIZE = 3, BUFFER_COUNT = 4;
+    private static final int QUEUE_SIZE = 6, BUFFER_COUNT = 8;
+    private static final int MAX_AHEAD = 6;
 
     private final Identifier textureId;
     private final ResolvedMedia.Stream source;
     private final int width, height, frameSize;
-
     private final ArrayBlockingQueue<VideoFrame> frames = new ArrayBlockingQueue<>(QUEUE_SIZE);
     private final ArrayBlockingQueue<ByteBuffer> buffers = new ArrayBlockingQueue<>(BUFFER_COUNT);
-    private final AtomicBoolean uploadQueued = new AtomicBoolean();
 
     private volatile LongSupplier playbackClock = () -> -1L;
     private volatile boolean closed, running, prepared, playbackRequested, paused, failed, decodeEnded, ended;
@@ -81,9 +79,7 @@ public final class FFmpegVideoSession implements AutoCloseable {
 
         try {
             for (int i = 0; i < BUFFER_COUNT; i++)
-                buffers.put(ByteBuffer.allocateDirect(frameSize));
-
-            if (closed) return;
+                buffers.add(ByteBuffer.allocateDirect(frameSize));
 
             List<String> command = new ArrayList<>();
             command.add(ProjectorTools.ffmpeg().toAbsolutePath().toString());
@@ -118,24 +114,23 @@ public final class FFmpegVideoSession implements AutoCloseable {
             command.add("rawvideo");
             command.add("pipe:1");
 
-            Process createdProcess = new ProcessBuilder(command).start();
+            Process created = new ProcessBuilder(command).start();
 
             if (closed) {
-                createdProcess.destroyForcibly();
+                created.destroyForcibly();
                 return;
             }
 
-            process = createdProcess;
-            startLogger(createdProcess);
+            process = created;
+            startLogger(created);
 
-            try (ReadableByteChannel input = Channels.newChannel(createdProcess.getInputStream())) {
+            try (ReadableByteChannel input = Channels.newChannel(created.getInputStream())) {
                 buffer = takeBuffer();
                 if (buffer == null) return;
 
                 if (!readFrame(input, buffer)) {
                     recycle(buffer);
                     buffer = null;
-
                     if (!closed) failed = true;
                     return;
                 }
@@ -150,36 +145,39 @@ public final class FFmpegVideoSession implements AutoCloseable {
                 while (!closed && running && !playbackRequested)
                     Thread.sleep(1L);
 
-                if (closed || !running) return;
-
                 while (!closed && running) {
                     while (!closed && running && paused)
                         Thread.sleep(2L);
 
                     if (closed || !running) break;
 
+                    waitForDecodeWindow(decodedIndex);
+
+                    if (closed || !running) break;
+
                     buffer = takeBuffer();
-                    if (buffer == null) break;
+                    if (buffer == null) continue;
 
                     if (!readFrame(input, buffer)) {
                         recycle(buffer);
                         buffer = null;
-
                         if (!closed) decodeEnded = true;
                         break;
                     }
 
                     long index = decodedIndex++;
                     lastDecodedIndex = index;
-
                     VideoFrame frame = new VideoFrame(buffer, index);
                     buffer = null;
 
-                    while (!closed && running
-                            && !frames.offer(frame, 10, TimeUnit.MILLISECONDS)) {}
+                    long clock = playbackClock.getAsLong();
 
-                    if (closed || !running)
+                    if (clock >= 0 && index < clock / FRAME_NS - 1) {
                         recycle(frame.data());
+                        continue;
+                    }
+
+                    enqueue(frame);
                 }
             }
         } catch (InterruptedException e) {
@@ -199,6 +197,46 @@ public final class FFmpegVideoSession implements AutoCloseable {
         }
     }
 
+    private void waitForDecodeWindow(long index) throws InterruptedException {
+        while (!closed && running && !paused) {
+            long clock = playbackClock.getAsLong();
+
+            if (clock < 0)
+                return;
+
+            long target = clock / FRAME_NS;
+
+            if (index <= target + MAX_AHEAD)
+                return;
+
+            Thread.onSpinWait();
+        }
+    }
+
+    private void enqueue(VideoFrame frame) throws InterruptedException {
+        while (!closed && running) {
+            if (frames.offer(frame, 2, TimeUnit.MILLISECONDS))
+                return;
+
+            long clock = playbackClock.getAsLong();
+
+            if (clock >= 0) {
+                long target = clock / FRAME_NS;
+                VideoFrame oldest = frames.peek();
+
+                if (oldest != null && oldest.index() < target) {
+                    oldest = frames.poll();
+                    if (oldest != null) recycle(oldest.data());
+                    continue;
+                }
+            }
+
+            Thread.sleep(1L);
+        }
+
+        recycle(frame.data());
+    }
+
     public void present() {
         if (closed || paused || failed || ended || !playbackRequested || !prepared)
             return;
@@ -206,13 +244,13 @@ public final class FFmpegVideoSession implements AutoCloseable {
         long clock = playbackClock.getAsLong();
         if (clock < 0) return;
 
-        long targetIndex = Math.max(0, clock) / FRAME_NS;
+        long target = Math.max(0, clock) / FRAME_NS;
         VideoFrame chosen = null;
 
         while (true) {
             VideoFrame next = frames.peek();
 
-            if (next == null || next.index() > targetIndex)
+            if (next == null || next.index() > target)
                 break;
 
             next = frames.poll();
@@ -226,7 +264,7 @@ public final class FFmpegVideoSession implements AutoCloseable {
         if (chosen != null) {
             if (chosen.index() > presentedIndex) {
                 presentedIndex = chosen.index();
-                queueUpload(chosen.data());
+                upload(chosen.data());
             } else {
                 recycle(chosen.data());
             }
@@ -236,23 +274,15 @@ public final class FFmpegVideoSession implements AutoCloseable {
             finishPlayback();
     }
 
-    private void queueUpload(ByteBuffer frame) {
-        if (!uploadQueued.compareAndSet(false, true)) {
+    private void upload(ByteBuffer frame) {
+        try {
+            BlazeVideoTexture current = texture;
+
+            if (!closed && !ended && current != null)
+                current.upload(frame);
+        } finally {
             recycle(frame);
-            return;
         }
-
-        Minecraft.getInstance().execute(() -> {
-            try {
-                BlazeVideoTexture current = texture;
-
-                if (!closed && !ended && current != null)
-                    current.upload(frame);
-            } finally {
-                recycle(frame);
-                uploadQueued.set(false);
-            }
-        });
     }
 
     private void finishPlayback() {
@@ -276,7 +306,6 @@ public final class FFmpegVideoSession implements AutoCloseable {
 
     private void recycle(@Nullable ByteBuffer buffer) {
         if (buffer == null || closed) return;
-
         buffer.clear();
         buffers.offer(buffer);
     }
@@ -285,13 +314,9 @@ public final class FFmpegVideoSession implements AutoCloseable {
     public boolean hasFrame() { return prepared && !ended; }
     public boolean failed() { return failed; }
     public boolean ended() { return ended; }
+    public Identifier texture() { return textureId; }
 
-    public Identifier texture() {
-        return textureId;
-    }
-
-    private static boolean readFrame(ReadableByteChannel input, ByteBuffer destination)
-            throws IOException {
+    private static boolean readFrame(ReadableByteChannel input, ByteBuffer destination) throws IOException {
         destination.clear();
 
         while (destination.hasRemaining()) {
@@ -362,7 +387,6 @@ public final class FFmpegVideoSession implements AutoCloseable {
     public void close() {
         if (closed) return;
 
-        closed = true;
         running = false;
         playbackRequested = true;
         paused = false;
@@ -373,6 +397,11 @@ public final class FFmpegVideoSession implements AutoCloseable {
         if (current != null)
             current.destroyForcibly();
 
+        VideoFrame frame;
+        while ((frame = frames.poll()) != null)
+            recycle(frame.data());
+
+        closed = true;
         texture = null;
 
         Minecraft minecraft = Minecraft.getInstance();

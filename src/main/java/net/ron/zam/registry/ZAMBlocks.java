@@ -13,8 +13,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.ron.zam.ZAMMod;
 import net.ron.zam.common.block.MarineFarmlandBlock;
+import net.ron.zam.common.block.corn.CornCropBlock;
 import net.ron.zam.common.block.fortune.MarinersFortuneChestBlock;
 import net.ron.zam.common.block.projector.ProjectorBlock;
 import net.ron.zam.common.block.record_rack.RecordRackBlock;
@@ -30,6 +32,12 @@ public class ZAMBlocks {
     public static final Block TELEVISION = registerBlock("television", properties -> new TelevisionBlock(properties.mapColor(MapColor.COLOR_GRAY).strength(1.5F).sound(SoundType.WOOD).lightLevel(state -> state.getValue(TelevisionBlock.POWER_STATE).isOn() ? 3 : 0)));
     public static final Block PROJECTOR = registerBlock("projector", properties -> new ProjectorBlock(properties.mapColor(MapColor.METAL).strength(2.0F).sound(SoundType.METAL).noOcclusion()));
 
+    public static final Block CORN = registerBlockWithoutItem("corn",
+            properties -> new CornCropBlock(properties
+                    .noCollision()
+                    .randomTicks()
+                    .instabreak()
+                    .sound(SoundType.CROP)));
     //Record Racks
     public static final Block OAK_RECORD_RACK = registerBlock("oak_record_rack", properties -> new RecordRackBlock(properties.overrideLootTable(Blocks.OAK_FENCE.getLootTable()).strength(1.0F).sound(SoundType.WOOD)));
     public static final Block SPRUCE_RECORD_RACK = registerBlock("spruce_record_rack", properties -> new RecordRackBlock(properties.overrideLootTable(Blocks.SPRUCE_FENCE.getLootTable()).strength(1.0F).sound(SoundType.WOOD)));
@@ -61,6 +69,20 @@ public class ZAMBlocks {
 
         Registry.register(BuiltInRegistries.ITEM, Identifier.fromNamespaceAndPath(ZAMMod.MOD_ID, name),
                 new BlockItem(block, itemProperties.apply(properties)));
+    }
+
+    private static Block registerBlockWithoutItem(String name, Function<BlockBehaviour.Properties, Block> function) {
+        Block block = function.apply(BlockBehaviour.Properties.of()
+                .setId(ResourceKey.create(
+                        Registries.BLOCK,
+                        Identifier.fromNamespaceAndPath(ZAMMod.MOD_ID, name)
+                )));
+
+        return Registry.register(
+                BuiltInRegistries.BLOCK,
+                Identifier.fromNamespaceAndPath(ZAMMod.MOD_ID, name),
+                block
+        );
     }
 
     public static void registerBlocks() {
