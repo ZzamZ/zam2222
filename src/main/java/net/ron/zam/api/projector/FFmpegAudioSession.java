@@ -3,28 +3,24 @@ package net.ron.zam.api.projector;
 import net.ron.zam.ZAMMod;
 
 import javax.sound.sampled.*;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 public final class FFmpegAudioSession implements AutoCloseable {
-    private static final float RATE = 48_000.0F;
-    private static final int AUDIO_BUFFER = 8192;
+    private static final float RATE = 48_000F;
+    private static final int BUFFER = 8192;
 
-    private final String url;
+    private final ResolvedMedia.Stream source;
     private final double startSeconds;
 
     private volatile boolean closed, prepared, startRequested, ready, paused, failed, ended;
-    private volatile float broadcasterVolume = 1.0F, distanceVolume = 1.0F;
+    private volatile float broadcasterVolume = 1F, distanceVolume = 1F;
     private volatile long lastPlaybackNanos = -1L;
-
     private volatile Process process;
     private volatile SourceDataLine line;
 
-    public FFmpegAudioSession(String url, double startSeconds) {
-        this.url = url;
+    public FFmpegAudioSession(ResolvedMedia.Stream source, double startSeconds) {
+        this.source = source;
         this.startSeconds = startSeconds;
 
         Thread thread = new Thread(this::run, "zam-web-audio");
@@ -33,21 +29,21 @@ public final class FFmpegAudioSession implements AutoCloseable {
     }
 
     private void run() {
-        boolean reachedEof = false;
+        boolean eof = false;
 
         try {
             AudioFormat format = new AudioFormat(RATE, 16, 2, true, false);
-            SourceDataLine createdLine = (SourceDataLine) AudioSystem.getLine(
+            SourceDataLine created = (SourceDataLine) AudioSystem.getLine(
                     new DataLine.Info(SourceDataLine.class, format));
 
-            createdLine.open(format, AUDIO_BUFFER);
+            created.open(format, BUFFER);
 
             if (closed) {
-                safeClose(createdLine);
+                safeClose(created);
                 return;
             }
 
-            line = createdLine;
+            line = created;
 
             List<String> command = new ArrayList<>();
             command.add(ProjectorTools.ffmpeg().toAbsolutePath().toString());
@@ -55,16 +51,15 @@ public final class FFmpegAudioSession implements AutoCloseable {
             command.add("-loglevel");
             command.add("error");
 
-            if (isRemote(url))
-                addReconnect(command);
+            inputOptions(command, source);
 
-            if (startSeconds > 0.0D) {
+            if (startSeconds > 0) {
                 command.add("-ss");
                 command.add(Double.toString(startSeconds));
             }
 
             command.add("-i");
-            command.add(url);
+            command.add(source.url());
             command.add("-vn");
             command.add("-sn");
             command.add("-dn");
@@ -88,12 +83,10 @@ public final class FFmpegAudioSession implements AutoCloseable {
             process = createdProcess;
             startLogger(createdProcess);
 
-            byte[] input = new byte[AUDIO_BUFFER];
-            byte[] output = new byte[AUDIO_BUFFER];
+            byte[] input = new byte[BUFFER], output = new byte[BUFFER];
 
             try (BufferedInputStream stream =
-                         new BufferedInputStream(createdProcess.getInputStream(), AUDIO_BUFFER)) {
-
+                         new BufferedInputStream(createdProcess.getInputStream(), BUFFER)) {
                 int first = stream.read(input);
 
                 if (first < 0) {
@@ -108,7 +101,7 @@ public final class FFmpegAudioSession implements AutoCloseable {
 
                 if (closed) return;
 
-                createdLine.start();
+                created.start();
                 write(input, output, first);
                 ready = true;
 
@@ -121,7 +114,7 @@ public final class FFmpegAudioSession implements AutoCloseable {
                     int read = stream.read(input);
 
                     if (read < 0) {
-                        reachedEof = true;
+                        eof = true;
                         break;
                     }
 
@@ -129,11 +122,10 @@ public final class FFmpegAudioSession implements AutoCloseable {
                 }
             }
 
-            if (!closed && reachedEof) {
-                capturePlaybackPosition();
+            if (!closed && eof) {
+                capturePosition();
                 ended = true;
             }
-
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         } catch (Exception e) {
@@ -143,21 +135,21 @@ public final class FFmpegAudioSession implements AutoCloseable {
             }
         } finally {
             if (!closed) {
-                capturePlaybackPosition();
+                capturePosition();
 
                 if (!ready && !ended)
                     failed = true;
 
-                cleanup(detachResources());
+                cleanup(detach());
             }
         }
     }
 
     private void write(byte[] input, byte[] output, int length) {
-        float volume = Math.clamp(broadcasterVolume * distanceVolume, 0.0F, 1.0F);
+        float volume = Math.clamp(broadcasterVolume * distanceVolume, 0F, 1F);
 
         for (int i = 0; i + 1 < length; i += 2) {
-            short sample = (short) ((input[i] & 255) | (input[i + 1] << 8));
+            short sample = (short) ((input[i] & 255) | input[i + 1] << 8);
             int scaled = Math.clamp(Math.round(sample * volume), Short.MIN_VALUE, Short.MAX_VALUE);
 
             output[i] = (byte) scaled;
@@ -170,24 +162,16 @@ public final class FFmpegAudioSession implements AutoCloseable {
             current.write(output, 0, length);
     }
 
-    private void capturePlaybackPosition() {
+    private void capturePosition() {
         SourceDataLine current = line;
 
         if (current != null)
             lastPlaybackNanos = framesToNanos(current.getLongFramePosition());
     }
 
-    public boolean prepared() {
-        return prepared;
-    }
-
-    public boolean failed() {
-        return failed;
-    }
-
-    public boolean ended() {
-        return ended;
-    }
+    public boolean prepared() { return prepared; }
+    public boolean failed() { return failed; }
+    public boolean ended() { return ended; }
 
     public void beginPlayback() {
         startRequested = true;
@@ -197,7 +181,6 @@ public final class FFmpegAudioSession implements AutoCloseable {
         if (paused || closed) return;
 
         paused = true;
-
         SourceDataLine current = line;
 
         if (current != null && current.isOpen())
@@ -208,7 +191,6 @@ public final class FFmpegAudioSession implements AutoCloseable {
         if (!paused || closed) return;
 
         paused = false;
-
         SourceDataLine current = line;
 
         if (current != null && current.isOpen() && startRequested)
@@ -218,31 +200,27 @@ public final class FFmpegAudioSession implements AutoCloseable {
     public long playbackNanos() {
         SourceDataLine current = line;
 
-        if (current != null && ready && !closed) {
+        if (current != null && ready && !closed)
             lastPlaybackNanos = framesToNanos(current.getLongFramePosition());
-            return lastPlaybackNanos;
-        }
 
         return lastPlaybackNanos;
     }
 
     public void setBroadcasterVolume(float value) {
-        broadcasterVolume = Math.clamp(value, 0.0F, 1.0F);
+        broadcasterVolume = Math.clamp(value, 0F, 1F);
     }
 
     public void setDistanceVolume(float value) {
-        distanceVolume = Math.clamp(value, 0.0F, 1.0F);
+        distanceVolume = Math.clamp(value, 0F, 1F);
     }
 
     private static long framesToNanos(long frames) {
-        return (long) (frames / RATE * 1_000_000_000.0D);
+        return (long) (frames / RATE * 1_000_000_000D);
     }
 
-    private static boolean isRemote(String url) {
-        return url.startsWith("http://") || url.startsWith("https://");
-    }
+    private static void inputOptions(List<String> command, ResolvedMedia.Stream source) {
+        if (!remote(source.url())) return;
 
-    private static void addReconnect(List<String> command) {
         command.add("-reconnect");
         command.add("1");
         command.add("-reconnect_streamed");
@@ -253,6 +231,31 @@ public final class FFmpegAudioSession implements AutoCloseable {
         command.add("4xx,5xx");
         command.add("-reconnect_delay_max");
         command.add("5");
+
+        String headers = headers(source.headers());
+
+        if (!headers.isBlank()) {
+            command.add("-headers");
+            command.add(headers);
+        }
+    }
+
+    private static String headers(Map<String, String> headers) {
+        StringBuilder result = new StringBuilder();
+
+        headers.forEach((key, value) -> {
+            String k = key.replace("\r", "").replace("\n", "");
+            String v = value.replace("\r", "").replace("\n", "");
+
+            if (!k.isBlank() && !v.isBlank())
+                result.append(k).append(": ").append(v).append("\r\n");
+        });
+
+        return result.toString();
+    }
+
+    private static boolean remote(String url) {
+        return url.startsWith("http://") || url.startsWith("https://");
     }
 
     private void startLogger(Process process) {
@@ -272,7 +275,7 @@ public final class FFmpegAudioSession implements AutoCloseable {
         thread.start();
     }
 
-    private synchronized Resources detachResources() {
+    private synchronized Resources detach() {
         Resources resources = new Resources(process, line);
         process = null;
         line = null;
@@ -288,17 +291,9 @@ public final class FFmpegAudioSession implements AutoCloseable {
     }
 
     private static void safeClose(SourceDataLine line) {
-        try {
-            line.stop();
-        } catch (Exception ignored) {}
-
-        try {
-            line.flush();
-        } catch (Exception ignored) {}
-
-        try {
-            line.close();
-        } catch (Exception ignored) {}
+        try { line.stop(); } catch (Exception ignored) {}
+        try { line.flush(); } catch (Exception ignored) {}
+        try { line.close(); } catch (Exception ignored) {}
     }
 
     @Override
@@ -309,17 +304,13 @@ public final class FFmpegAudioSession implements AutoCloseable {
         paused = false;
         startRequested = true;
 
-        Resources resources = detachResources();
+        Resources resources = detach();
 
         if (resources.process() != null)
             resources.process().destroyForcibly();
 
         if (resources.line() != null) {
-            Thread thread = new Thread(
-                    () -> safeClose(resources.line()),
-                    "zam-audio-close"
-            );
-
+            Thread thread = new Thread(() -> safeClose(resources.line()), "zam-audio-close");
             thread.setDaemon(true);
             thread.start();
         }

@@ -2,9 +2,7 @@ package net.ron.zam.common.item;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.ron.zam.common.component.VideoMediaComponent;
 import net.ron.zam.registry.ZAMComponents;
@@ -25,8 +23,12 @@ public class VideoTapeItem extends Item {
     }
 
     public static void configure(ItemStack stack, String url, float volume) {
+        configure(stack, url, volume, "", "");
+    }
+
+    public static void configure(ItemStack stack, String url, float volume, String title, String creator) {
         stack.set(ZAMComponents.VIDEO_MEDIA,
-                new VideoMediaComponent(url.trim(), Math.clamp(volume, 0.0F, 1.0F)));
+                new VideoMediaComponent(url, volume, title, creator));
     }
 
     public static void clear(ItemStack stack) {
@@ -51,12 +53,16 @@ public class VideoTapeItem extends Item {
         VideoMediaComponent media = getMedia(stack);
         if (media == null || media.url().isBlank()) return;
 
-        tooltip.accept(Component.literal(fileName(media.url()))
-                .withStyle(ChatFormatting.GRAY));
+        String title = media.title().isBlank() ? fileName(media.url()) : media.title();
 
-        tooltip.accept(Component.literal(
-                "Volume: " + Math.round(media.volume() * 100.0F) + "%"
-        ).withStyle(ChatFormatting.DARK_GRAY));
+        if (!title.isBlank())
+            tooltip.accept(Component.literal(title).withStyle(ChatFormatting.GRAY));
+
+        if (!media.creator().isBlank())
+            tooltip.accept(Component.literal(media.creator()).withStyle(ChatFormatting.DARK_GRAY));
+
+        tooltip.accept(Component.literal("Volume: " + Math.round(media.volume() * 100F) + "%")
+                .withStyle(ChatFormatting.DARK_GRAY));
     }
 
     private static String fileName(String source) {
@@ -65,22 +71,16 @@ public class VideoTapeItem extends Item {
         try {
             if (value.startsWith("http://") || value.startsWith("https://")) {
                 String path = URI.create(value).getPath();
-
                 if (path != null && !path.isBlank())
                     value = Path.of(path).getFileName().toString();
             } else {
                 value = value.replace('\\', '/');
-
                 int slash = value.lastIndexOf('/');
-                if (slash >= 0)
-                    value = value.substring(slash + 1);
+                if (slash >= 0) value = value.substring(slash + 1);
             }
 
             int dot = value.lastIndexOf('.');
-            if (dot > 0)
-                value = value.substring(0, dot);
-
-            return value;
+            return dot > 0 ? value.substring(0, dot) : value;
         } catch (Exception ignored) {
             return value;
         }

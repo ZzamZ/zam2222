@@ -4,14 +4,14 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.components.AbstractSliderButton;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
+import net.ron.zam.ZAMMod;
+import net.ron.zam.api.projector.MediaResolver;
 import net.ron.zam.common.packet.ConfigureVideoTapePacket;
 
 public class ProjectorScreen extends Screen {
@@ -22,6 +22,8 @@ public class ProjectorScreen extends Screen {
     private final float initialVolume;
     private EditBox urlBox;
     private VolumeSlider volumeSlider;
+    private Button doneButton;
+    private boolean submitting, submitted;
 
     public ProjectorScreen(InteractionHand hand, String url, float volume) {
         super(TITLE);
@@ -36,8 +38,7 @@ public class ProjectorScreen extends Screen {
 
     @Override
     protected void init() {
-        int left = width / 2 - 180;
-        int top = height / 4 + 10;
+        int left = width / 2 - 180, top = height / 4 + 10;
 
         urlBox = new EditBox(font, left, top, 360, 20, title);
         urlBox.setMaxLength(2048);
@@ -45,47 +46,69 @@ public class ProjectorScreen extends Screen {
         urlBox.setValue(initialUrl);
         addRenderableWidget(urlBox);
 
-        volumeSlider = addRenderableWidget(
-                new VolumeSlider(left, top + 30, 360, initialVolume)
-        );
+        volumeSlider = addRenderableWidget(new VolumeSlider(left, top + 30, 360, initialVolume));
 
-        addRenderableWidget(Button.builder(
-                Component.literal("Clear Tape"),
-                b -> clearTape()
-        ).bounds(left, top + 80, 176, 20).build());
+        addRenderableWidget(Button.builder(Component.literal("Clear Tape"), b -> clearTape())
+                .bounds(left, top + 80, 176, 20).build());
 
-        addRenderableWidget(Button.builder(
-                CommonComponents.GUI_DONE,
-                b -> done()
-        ).bounds(left + 184, top + 80, 176, 20).build());
+        doneButton = addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, b -> done())
+                .bounds(left + 184, top + 80, 176, 20).build());
 
         setInitialFocus(urlBox);
         urlBox.setFocused(true);
     }
 
     private void done() {
-        ClientPlayNetworking.send(new ConfigureVideoTapePacket(
-                hand,
-                urlBox.getValue().trim(),
-                volumeSlider.getVolume()
-        ));
+        if (submitting) return;
 
-        minecraft.gui.setScreen(null);
+        String url = urlBox.getValue().trim();
+        float volume = volumeSlider.getVolume();
+
+        if (url.isBlank()) {
+            send("", volume, "", "");
+            return;
+        }
+
+        submitting = true;
+        doneButton.active = false;
+        doneButton.setMessage(Component.literal("Resolving..."));
+
+        Thread thread = new Thread(() -> {
+            String title = "", creator = "";
+
+            try {
+                var media = MediaResolver.resolve(url);
+                title = media.title();
+                creator = media.creator();
+            } catch (Exception e) {
+                ZAMMod.LOGGER.warn("Could not resolve media metadata for {}", url);
+            }
+
+            String finalTitle = title, finalCreator = creator;
+            minecraft.execute(() -> send(url, volume, finalTitle, finalCreator));
+        }, "zam-media-metadata");
+
+        thread.setDaemon(true);
+        thread.start();
     }
 
     private void clearTape() {
-        ClientPlayNetworking.send(new ConfigureVideoTapePacket(
-                hand,
-                "",
-                1.0F
-        ));
+        if (!submitting) send("", 1F, "", "");
+    }
+
+    private void send(String url, float volume, String title, String creator) {
+        submitted = true;
+
+        ClientPlayNetworking.send(
+                new ConfigureVideoTapePacket(hand, url, volume, title, creator)
+        );
 
         minecraft.gui.setScreen(null);
     }
 
     @Override
     public void onClose() {
-        done();
+        if (!submitted && !submitting) done();
     }
 
     @Override
@@ -113,23 +136,18 @@ public class ProjectorScreen extends Screen {
     }
 
     private static class VolumeSlider extends AbstractSliderButton {
-        public VolumeSlider(int x, int y, int width, float volume) {
-            super(x, y, width, 20, Component.empty(), Math.clamp(volume, 0.0F, 1.0F));
+        VolumeSlider(int x, int y, int width, float volume) {
+            super(x, y, width, 20, Component.empty(), Math.clamp(volume, 0F, 1F));
             updateMessage();
         }
 
-        public float getVolume() {
-            return (float) value;
-        }
+        float getVolume() { return (float) value; }
 
         @Override
         protected void updateMessage() {
-            setMessage(Component.literal(
-                    "Volume: " + Math.round(value * 100.0D) + "%"
-            ));
+            setMessage(Component.literal("Volume: " + Math.round(value * 100D) + "%"));
         }
 
-        @Override
-        protected void applyValue() {}
+        @Override protected void applyValue() {}
     }
 }

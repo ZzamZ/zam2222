@@ -16,8 +16,6 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.ron.zam.common.gui.ProjectorScreen;
@@ -28,13 +26,10 @@ import org.jetbrains.annotations.Nullable;
 public class ProjectorBlock extends BaseEntityBlock {
     public static final MapCodec<ProjectorBlock> CODEC = simpleCodec(ProjectorBlock::new);
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
-    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
     public ProjectorBlock(Properties properties) {
         super(properties);
-        registerDefaultState(stateDefinition.any()
-                .setValue(FACING, Direction.NORTH)
-                .setValue(POWERED, false));
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
     @Override
@@ -44,14 +39,12 @@ public class ProjectorBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, POWERED);
+        builder.add(FACING);
     }
 
     @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return defaultBlockState()
-                .setValue(FACING, ctx.getHorizontalDirection().getOpposite())
-                .setValue(POWERED, false);
+        return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
     }
 
     @Override
@@ -67,36 +60,18 @@ public class ProjectorBlock extends BaseEntityBlock {
     @Override
     protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
                                           Player player, InteractionHand hand, BlockHitResult hit) {
-        if (player.isSecondaryUseActive())
-            return togglePower(state, level, pos);
-
         if (!stack.is(ZAMItems.VIDEO_TAPE))
             return InteractionResult.PASS;
 
         if (level.isClientSide()) {
             var media = VideoTapeItem.getMedia(stack);
+
             ProjectorScreen.open(
                     hand,
                     media != null ? media.url() : "",
                     media != null ? media.volume() : 1.0F
             );
         }
-
-        return InteractionResult.SUCCESS;
-    }
-
-    @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
-                                               Player player, BlockHitResult hit) {
-        if (player.isSecondaryUseActive())
-            return togglePower(state, level, pos);
-
-        return InteractionResult.PASS;
-    }
-
-    private static InteractionResult togglePower(BlockState state, Level level, BlockPos pos) {
-        if (!level.isClientSide())
-            level.setBlock(pos, state.cycle(POWERED), 3);
 
         return InteractionResult.SUCCESS;
     }

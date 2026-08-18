@@ -9,8 +9,4 @@ public class ProjectorBlockEntity extends BlockEntity {
     public ProjectorBlockEntity(BlockPos pos, BlockState state) {
         super(ZAMBlockEntities.PROJECTOR, pos, state);
     }
-
-    public boolean isPowered() {
-        return getBlockState().getValue(ProjectorBlock.POWERED);
-    }
 }

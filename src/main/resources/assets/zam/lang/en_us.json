@@ -4,6 +4,7 @@
   "item.zam.music_box": "Music Box",
   "item.zam.gold_icon": "Gold Icon",
   "item.zam.cassette": "Cassette",
+  "item.zam.cassette": "Cassette",
 
   "item.zam.wood_medal": "Wood Medal",
   "item.zam.bronze_medal": "Bronze Medal",
@@ -324,6 +325,7 @@
   "item.zam.marine_spear.ability.description.2": "launches them away without harming passive or neutral mobs.",
 
   "block.zam.television": "Television",
+  "block.zam.projector": "Projector",
 
   "block.zam.oak_record_rack": "Oak Record Rack",
   "block.zam.spruce_record_rack": "Spruce Record Rack",

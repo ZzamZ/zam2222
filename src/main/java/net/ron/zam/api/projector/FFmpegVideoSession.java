@@ -5,15 +5,11 @@ import net.minecraft.resources.Identifier;
 import net.ron.zam.ZAMMod;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.ByteBuffer;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.TimeUnit;
+import java.nio.channels.*;
+import java.util.*;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.LongSupplier;
 
@@ -23,7 +19,7 @@ public final class FFmpegVideoSession implements AutoCloseable {
     private static final int QUEUE_SIZE = 3, BUFFER_COUNT = 4;
 
     private final Identifier textureId;
-    private final String url;
+    private final ResolvedMedia.Stream source;
     private final int width, height, frameSize;
 
     private final ArrayBlockingQueue<VideoFrame> frames = new ArrayBlockingQueue<>(QUEUE_SIZE);
@@ -38,16 +34,16 @@ public final class FFmpegVideoSession implements AutoCloseable {
     @Nullable private volatile Process process;
     @Nullable private volatile BlazeVideoTexture texture;
 
-    public FFmpegVideoSession(Identifier textureId, String url, int width, int height, double startSeconds) {
+    public FFmpegVideoSession(Identifier textureId, ResolvedMedia.Stream source,
+                              int width, int height, double startSeconds) {
         this.textureId = textureId;
-        this.url = url;
+        this.source = source;
         this.width = width;
         this.height = height;
         this.frameSize = width * height * 4;
 
         texture = new BlazeVideoTexture("ZAM Video " + textureId, width, height);
         Minecraft.getInstance().getTextureManager().register(textureId, texture);
-
         start(startSeconds);
     }
 
@@ -59,10 +55,8 @@ public final class FFmpegVideoSession implements AutoCloseable {
         decodedIndex = 0;
         presentedIndex = lastDecodedIndex = -1;
 
-        Thread thread = new Thread(
-                () -> decode(startSeconds),
-                "zam-video-decoder-" + textureId.getPath()
-        );
+        Thread thread = new Thread(() -> decode(startSeconds),
+                "zam-video-decoder-" + textureId.getPath());
 
         thread.setDaemon(true);
         thread.start();
@@ -75,13 +69,11 @@ public final class FFmpegVideoSession implements AutoCloseable {
     }
 
     public void pausePlayback() {
-        if (!closed)
-            paused = true;
+        if (!closed) paused = true;
     }
 
     public void resumePlayback() {
-        if (!closed)
-            paused = false;
+        if (!closed) paused = false;
     }
 
     private void decode(double startSeconds) {
@@ -99,30 +91,27 @@ public final class FFmpegVideoSession implements AutoCloseable {
             command.add("-loglevel");
             command.add("error");
 
-            if (isRemote(url))
-                addReconnect(command);
+            inputOptions(command, source);
 
             command.add("-hwaccel");
             command.add("auto");
 
-            if (startSeconds > 0.0D) {
+            if (startSeconds > 0) {
                 command.add("-ss");
                 command.add(Double.toString(startSeconds));
             }
 
             command.add("-i");
-            command.add(url);
+            command.add(source.url());
             command.add("-an");
             command.add("-sn");
             command.add("-dn");
             command.add("-vf");
-            command.add(
-                    "fps=" + FPS + ","
-                            + "scale=" + width + ":" + height
-                            + ":force_original_aspect_ratio=decrease:flags=fast_bilinear,"
-                            + "pad=" + width + ":" + height
-                            + ":(ow-iw)/2:(oh-ih)/2:black"
-            );
+            command.add("fps=" + FPS
+                    + ",scale=" + width + ":" + height
+                    + ":force_original_aspect_ratio=decrease:flags=fast_bilinear"
+                    + ",pad=" + width + ":" + height
+                    + ":(ow-iw)/2:(oh-ih)/2:black");
             command.add("-pix_fmt");
             command.add("rgba");
             command.add("-f");
@@ -147,9 +136,7 @@ public final class FFmpegVideoSession implements AutoCloseable {
                     recycle(buffer);
                     buffer = null;
 
-                    if (!closed)
-                        failed = true;
-
+                    if (!closed) failed = true;
                     return;
                 }
 
@@ -178,9 +165,7 @@ public final class FFmpegVideoSession implements AutoCloseable {
                         recycle(buffer);
                         buffer = null;
 
-                        if (!closed)
-                            decodeEnded = true;
-
+                        if (!closed) decodeEnded = true;
                         break;
                     }
 
@@ -197,7 +182,6 @@ public final class FFmpegVideoSession implements AutoCloseable {
                         recycle(frame.data());
                 }
             }
-
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         } catch (Exception e) {
@@ -220,9 +204,9 @@ public final class FFmpegVideoSession implements AutoCloseable {
             return;
 
         long clock = playbackClock.getAsLong();
-        if (clock < 0L) return;
+        if (clock < 0) return;
 
-        long targetIndex = Math.max(0L, clock) / FRAME_NS;
+        long targetIndex = Math.max(0, clock) / FRAME_NS;
         VideoFrame chosen = null;
 
         while (true) {
@@ -252,17 +236,6 @@ public final class FFmpegVideoSession implements AutoCloseable {
             finishPlayback();
     }
 
-    private void finishPlayback() {
-        if (ended) return;
-
-        ended = true;
-
-        VideoFrame frame;
-
-        while ((frame = frames.poll()) != null)
-            recycle(frame.data());
-    }
-
     private void queueUpload(ByteBuffer frame) {
         if (!uploadQueued.compareAndSet(false, true)) {
             recycle(frame);
@@ -275,12 +248,20 @@ public final class FFmpegVideoSession implements AutoCloseable {
 
                 if (!closed && !ended && current != null)
                     current.upload(frame);
-
             } finally {
                 recycle(frame);
                 uploadQueued.set(false);
             }
         });
+    }
+
+    private void finishPlayback() {
+        if (ended) return;
+        ended = true;
+
+        VideoFrame frame;
+        while ((frame = frames.poll()) != null)
+            recycle(frame.data());
     }
 
     @Nullable
@@ -300,60 +281,64 @@ public final class FFmpegVideoSession implements AutoCloseable {
         buffers.offer(buffer);
     }
 
-    public boolean prepared() {
-        return prepared;
-    }
-
-    public boolean hasFrame() {
-        return prepared && !ended;
-    }
-
-    public boolean failed() {
-        return failed;
-    }
-
-    public boolean ended() {
-        return ended;
-    }
+    public boolean prepared() { return prepared; }
+    public boolean hasFrame() { return prepared && !ended; }
+    public boolean failed() { return failed; }
+    public boolean ended() { return ended; }
 
     public Identifier texture() {
-        present();
         return textureId;
     }
 
     private static boolean readFrame(ReadableByteChannel input, ByteBuffer destination)
-            throws java.io.IOException {
+            throws IOException {
         destination.clear();
 
         while (destination.hasRemaining()) {
             int read = input.read(destination);
 
-            if (read < 0)
-                return false;
-
-            if (read == 0)
-                Thread.onSpinWait();
+            if (read < 0) return false;
+            if (read == 0) Thread.onSpinWait();
         }
 
         destination.flip();
         return true;
     }
 
-    private static boolean isRemote(String url) {
-        return url.startsWith("http://") || url.startsWith("https://");
+    private static void inputOptions(List<String> command, ResolvedMedia.Stream source) {
+        if (!remote(source.url())) return;
+
+        Collections.addAll(command,
+                "-reconnect", "1",
+                "-reconnect_streamed", "1",
+                "-reconnect_on_network_error", "1",
+                "-reconnect_on_http_error", "4xx,5xx",
+                "-reconnect_delay_max", "5");
+
+        String headers = headers(source.headers());
+
+        if (!headers.isBlank()) {
+            command.add("-headers");
+            command.add(headers);
+        }
     }
 
-    private static void addReconnect(List<String> command) {
-        command.add("-reconnect");
-        command.add("1");
-        command.add("-reconnect_streamed");
-        command.add("1");
-        command.add("-reconnect_on_network_error");
-        command.add("1");
-        command.add("-reconnect_on_http_error");
-        command.add("4xx,5xx");
-        command.add("-reconnect_delay_max");
-        command.add("5");
+    private static String headers(Map<String, String> headers) {
+        StringBuilder result = new StringBuilder();
+
+        headers.forEach((key, value) -> {
+            String k = key.replace("\r", "").replace("\n", "");
+            String v = value.replace("\r", "").replace("\n", "");
+
+            if (!k.isBlank() && !v.isBlank())
+                result.append(k).append(": ").append(v).append("\r\n");
+        });
+
+        return result.toString();
+    }
+
+    private static boolean remote(String url) {
+        return url.startsWith("http://") || url.startsWith("https://");
     }
 
     private void startLogger(Process process) {
@@ -392,12 +377,10 @@ public final class FFmpegVideoSession implements AutoCloseable {
 
         Minecraft minecraft = Minecraft.getInstance();
 
-        if (minecraft.isSameThread()) {
+        if (minecraft.isSameThread())
             minecraft.getTextureManager().release(textureId);
-        } else {
-            minecraft.execute(() ->
-                    minecraft.getTextureManager().release(textureId));
-        }
+        else
+            minecraft.execute(() -> minecraft.getTextureManager().release(textureId));
     }
 
     private record VideoFrame(ByteBuffer data, long index) {}

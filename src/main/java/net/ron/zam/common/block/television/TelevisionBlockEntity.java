@@ -111,23 +111,8 @@ public class TelevisionBlockEntity extends BlockEntity {
 
     @Override
     public void setRemoved() {
-        if (level != null) {
-            if (level.isClientSide()) {
-                WebVideoManager.stop(this);
-            } else if (!level.getBlockState(worldPosition).is(ZAMBlocks.TELEVISION) && !cassette.isEmpty()) {
-                TelevisionMultiblock.transferRemovedPlayback(
-                        level,
-                        worldPosition,
-                        getBlockState().getValue(TelevisionBlock.FACING),
-                        cassette,
-                        playing,
-                        playbackTicks
-                );
-
-                cassette = ItemStack.EMPTY;
-                playing = false;
-            }
-        }
+        if (level != null && level.isClientSide())
+            WebVideoManager.stop(this);
 
         super.setRemoved();
     }
