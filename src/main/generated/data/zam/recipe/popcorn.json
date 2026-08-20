@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "experience": 0.35,
+  "ingredient": "zam:corn_kernels",
+  "result": {
+    "id": "zam:popcorn"
+  }
+}
